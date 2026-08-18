@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Notas · Ing. Comercial UC</title>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQ2FsY3VsYWRvcmEgZGUgTm90YXMgLSBJbmcuIENvbWVyY2lhbCBVQyIsInNob3J0X25hbWUiOiJOb3RhcyBVQyIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBFMUEyQyIsInRoZW1lX2NvbG9yIjoiIzBFMUEyQyIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQUlBQUFEZHZ2dFFBQUFES1VsRVFWUjRuTzNkSVc1VVVSU0E0U25CMUJBU0dwcDBEVWhrTFJaRndpTFlBRXRnQTEwRUNRcUxyV1FqRUVod1dNUVFVTFIzN3M4dGZlWDc5RGt2Vi95NUhmRTZjL1RnN01rT1p0Mzcxd2RnMndSRUlpQVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJamsvcjgrQURQT0wxK01qRjJldjF0OWtpTmY4N3M1Zy9YOHNqUWpmOEkyNXRCNjVsYkdDV2hMcGxOWTE1Q0FTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWdFUkNJZ0VnR1JDSWhFUUNRQ0loRVFpWUJJQkVUaXZ6TFd1dmg0UERqNTZ1bjNwU2RaeEEyMDBIZzkrK0dENW04SkFhMHlWOFBtR2hMUUVxV0RiVFVrSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWk4MHZyYmwvZWZCaWRQbnA4dVBjbUd1SUYrR3E5blAzelEvQjBtb04zdXdIcmkxaDBqb05TQmhnUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUXlWWmZhZjM2K3VIZzVLTTMzeGFlNDcrM3lSdG92Sjc5OEVIekhHUjdBYzNWb0tGRk5oWlE2VUJESzJ3c0lHNGJBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSWJ1S1Yxczh2bjQyTVBYNzdZZlZKK091VzMwQ0Q5ZXdueDRlNUpkWUdOQkdFaHJabFlVRFRLV2hvUTN5SUpoRVFpWUJJQkVRaUlCSUJrUWlJUkVBa0FpSVJFSW1BU0FSRUlpQVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUpaR05EMGwyWmVzVmgrQlA1UHV5ZlBUNmVmK2FmZFYwKy9Uei96aXQzTDgzZHp6NXhldkpZYmlHUnRRQk9YMExVcmM1ZlExVnR6bDlEVlczT1gwTFZiRTNmSnV1dG50OXNkUFRoN3N1N3BleXUrSjNyOFIrREhnL3Z5L3RQZzVIaHdGeCtQQnljUEN1Nzg4c1hJMk5KMDltNGlJTzR3bjRGSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTSDRBRXAxMG14MlB3TkVBQUFBQVNVVk9SSzVDWUlJPSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55In0seyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQUlBQUFCN0drT3RBQUFLQlVsRVFWUjRuTzNaTVk1Y1JSUkEwVGFhaE1SQ01nTEphM0JJNkpUVUVSS0xZQU1zZ1Eyd0NDUWlVbEtIYkFSa0pESlNBaU5raGhIQ3pLOWZyL3VlczRDcUY3MWIzZi9KMCtjdkxnRDBmTEI3QUFEMkVBQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlpNjJ6MEF3Tis4ZlAzRnVzTmZ2L3grM2VGWDU4blQ1eTkyendCd3VTeGUvZmNvd1VVQWdBbk9YUDN2aW1mQU53QmdzMTNiZisvVkV3Z0FzTlAyRmJ4OWdJMEVBTmhteVBJZE1zYjVCQURZWTlUYUhUWE1hUVFBMkdEZ3doMDQwbW9DQUJBbEFNRFp4cjYxeHc2MmlBQUFSQWtBY0tyaHIremg0eDFMQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJT3B1OXdEQSsvbjJwdzhYbmZ6Vlo3OHZPcG1aQkFDdXhyclZmKzk4SllnUUFMZ0NxMWYvZzlmSndNM3pEUUNtTzNuN2I3K1gwd2dBakxaM0MydkFiUk1BbUd2Qy9wMHdBNHNJQUF3MVovUE9tWVJqQ1FCTU5HM25UcHVIUXdnQVFKUUF3RGd6bjlzenArSXhCQUFnU2dCZ2xza1A3Y216OFQ4SUFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFM2UwZUFBNzI1b2VmRjUzODhhdFBGNTBNV3dnQXQyUGQ2cjkzdmhKd0d3U0FXN0I2OVQ5NG5ReHc3WHdENE9xZHZQMjMzd3RIRVFDdTI5NHRyQUZjTlFIZ2lrM1l2eE5tZ1A5SEFMaFdjemJ2bkVuZ3ZRZ0FWMm5henAwMkQvd1hBZ0FRSlFCY241blA3WmxUd2I4UUFJQW9BZURLVEg1b1Q1NE4va2tBQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpN25ZUHdObCsvZnFqUlNjLysrYTNSU2NES3doQXlMclZmKzk4SllDcklBQUpxMWYvZzlmSkFBem5HOER0TzNuN2I3OFgrSThFNE1idDNjSWFBSk1Kd0MyYnNIOG56QUE4U0FCdTFwek5PMmNTNEYwQ2NKdW03ZHhwOHdBWEFRRElFb0FiTlBPNVBYTXFLQk1BZ0NnQnVEV1RIOXFUWjRNZ0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlMcmJQY0FzdjN6NStickRQL251eDNXSEE3d3ZBZmpUMHRWLzd3b2xBQ1lRZ0ROVy80TTN5Z0N3Vi8wYndQbmJmOExWQUpkNEFMYXY0TzBEQUdYZEFBeFp2a1BHQUlLaUFSaTFka2NOQTNRVUF6Qnc0UTRjQ2JoNXhRQUFjQWtHWU94YmUreGd3SzNLQlFDQXQxb0JHUDdLSGo0ZWNHTmFBUURnTHdJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVYTBBZlBMZGo3dEgrRGVIalBmc205OGVmOGdpaDh6MjhhdFBIMy9JSW9mTTl0Vm52ei8ra0VVT21lMzF5KzhmZjhnNnc4YzdWaXNBQVB4RkFBQ2ljZ0VZK3kvUWdZUE4vQmZvd0tsbS9ndDA0RlF6L3dVNmNLcXhmN09NSFd5UlhBQUFlS3NZZ0lFL0FnNGZhZHFQZ01Qbm1mWWo0UEI1cHYwSU9IeWVnVy90Z1NPdFZnekFaVmdERmcwenB3R0xKcG5UZ0VXVHpHbkFva2xHTGR4Unc1d21Hb0RMbUFZc0hXTkNBNWJPTUtFQlMyZVkwSUNsTXd4WnUwUEdPRjgzQUpjQkRUaGhnTDBOT09IMnZRMDQ0ZmE5RFRqaDl1M0xkL3NBRzZVRGNObmFnTk91M3RXQTArN2QxWURUN3QzVmdOUHUzYmlDeTl2L2NyazhlZnI4eGU0WlJ2amx5ODlQdTJ0WGRYNzkrcU56THRxVm5EYy8vSHpPUmJ1UzgrMVBINTV6MGE3a3ZIejl4V2wzeFZmL1d3THdOMHN6c1AwZnA3ZldaV0RDSjRmTHlneE0rT1J3V1ptQkNaOGNMb3N6WU8rL1N3QUFvdXJmQUFDeUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0RxRDI0aU1QUTMyUlZMQUFBQUFFbEZUa1N1UW1DQyIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55In1dfQ==">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAhElEQVR4nGPkk9JhoCVgoqnpoxYMCgtYqGWQzZEQOPuIzRo4e+gH0SCOg6lnOOHsbJPvuJSNqCB6s+klMnclgwIxuoZ9EL2tEICz/zO8xK0QJxh+QfQq3BXOFlu5m3ILhn4QjVowiC1AS6PCHR+QuSJ+4nA2WmWAXCEzMDAwjjYdh78FANDlF16B/RXJAAAAAElFTkSuQmCC">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAADKUlEQVR4nO3dIW5UURSA4SnB1BASGpp0DUhkLRZFwiLYAEtgA10ECQqLrWQjEEhwWMQQULR37s8tfeX79DkvV/y5HfE6c/Tg7MkOZt371wdg2wREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIjk/r8+ADPOL1+MjF2ev1t9kiNf87s5g/X8sjQjf8I25tB65lbGCWhLplNY15CASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBETivzLWuvh4PDj56un3pSdZxA200Hg9++GD5m8JAa0yV8PmGhLQEqWDbTUkIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEi80vrbl/efBidPnp8uPcmGuIF+Gq9nP3zQ/B0moN3uwHri1h0joNSBhgREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQyVZfaf36+uHg5KM33xae47+3yRtovJ798EHzHGR7Ac3VoKFFNhZQ6UBDK2wsIG4bAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIbuKV1s8vn42MPX77YfVJ+OuW30CD9ewnx4e5JdYGNBGEhrZlYUDTKWhoQ3yIJhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiJZGND0l2ZesVh+BP5PuyfPT6ef+afdV0+/Tz/zit3L83dzz5xevJYbiGRtQBOX0LUrc5fQ1Vtzl9DVW3OX0LVbE3fJuutnt9sdPTh7su7peyu+J3r8R+DHg/vy/tPg5HhwFx+PBycPCu788sXI2NJ09m4iIO4wn4FIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASH4AEp10mx2PwNEAAAAASUVORK5CYII=">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADAklEQVR4nO3dMW4TQRiA0QTR0CAkEEg5Q0rKtLRUSByCC3AELsAhkFLR0qbMRUBBoqOlsETFZ68n3njNvlf/sxppPo1drOzzpxeXZ/Avj469AZZLHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkB4fewOkq5t3O2durq7n28C5H4xbpill/DVTIj5WlmivMgbmJxLH4oyd9Bx9iIMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgeYf0YD7fPpky9uH177l3cihujsOYWMZmcvrwcYnjAAYO+yT6EMd9DR/z8vsQB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcpFW/CXb39fvOmRdvXz3ATpZpvTfHlDI2YxMn/z8rjWPf815nH2uMY+ykV9jHGuNgInGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQTulNsJ8fn00Ze/7p17z7WI2TuTkmlrGZnD7MFqcRx8Bh6+P+TiCO4WPWxz2dQBwcizhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI874J9uP9m50zL798m3UPDJvx5phSxmZs4iQPbK449j1vfSzQLHGMnbQ+lsYXUpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgzRLH2C851arhP/SrhS/evhp4Wq368Pr3wNO2LLy5uh542tiq7dwcpLni2Pfy2D4/cHlsX7Lv5bF9fuDy2L5k32tgjmvj7Ozs/OnF5RzP3Tjsrwke/H9l775+3zkzPaPPt0+mjE0v6erm3c6ZmbLYmDcOTprvHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkP4AMlV0g16uLbUAAAAASUVORK5CYII=">
+<meta name="theme-color" content="#0E1A2C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Notas UC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #0E1A2C;
+    color: #E8EDF5;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb { background: #243B5C; border-radius: 3px; }
+
+  /* ── Header ── */
+  #header {
+    background: #0B1525;
+    padding: 18px 20px 0;
+    border-bottom: 1px solid #1A2740;
+    position: sticky; top: 0; z-index: 10;
+  }
+  #header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  #title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.5px; line-height: 1.1; }
+  #subtitle { font-size: 11px; color: #6E7E97; margin-top: 4px; letter-spacing: 0.5px; }
+  #save-msg {
+    font-size: 11px; color: #4ADE80; font-weight: 500;
+    padding: 4px 10px; background: #143020; border-radius: 999px;
+    border: 1px solid #1F4630; display: none;
+  }
+  #tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 12px; }
+  .tab-btn {
+    padding: 8px 14px; border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500;
+    white-space: nowrap; cursor: pointer;
+    transition: all 0.2s; border: 1px solid #243B5C;
+    background: transparent; color: #8997B0;
+  }
+  .tab-btn:hover { transform: translateY(-1px); }
+  .tab-btn.active { font-weight: 600; }
+
+  /* ── Main content ── */
+  #main { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  /* ── Course hero ── */
+  #course-hero {
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #course-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.3px; line-height: 1.15; }
+  #course-code { font-size: 11px; font-weight: 600; margin-top: 4px; letter-spacing: 1.2px; }
+  #avg-box { text-align: right; padding-left: 16px; flex-shrink: 0; }
+  #avg-label { font-size: 9.5px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 2px; }
+  #avg-value { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.5px; }
+  #avg-pct { font-size: 10px; color: #6E7E97; margin-top: 4px; }
+
+  /* ── Rules note ── */
+  #rules-note {
+    background: #142037; border: 1px solid #1F2D44;
+    border-radius: 10px; padding: 11px 14px; margin-bottom: 22px;
+    font-size: 12px; color: #8997B0; line-height: 1.6;
+  }
+
+  /* ── Eval groups ── */
+  .group-wrap { margin-bottom: 18px; }
+  .group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 0 4px; }
+  .group-bar { width: 3px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+  .group-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .surprise-controls { margin-left: auto; display: flex; align-items: center; gap: 5px; }
+  .surprise-label { font-size: 11px; color: #6E7E97; margin-right: 2px; }
+  .sn-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: #142037; border: 1px solid #243B5C;
+    color: #8997B0; font-size: 11px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .sn-btn:hover { transform: scale(1.08); }
+  .sn-btn.active { color: #0E1A2C; }
+
+  .group-card { background: #142037; border: 1px solid #1F2D44; border-radius: 12px; overflow: hidden; }
+
+  /* ── Eval row ── */
+  .eval-row { padding: 16px 18px; border-bottom: 1px solid #1F2D44; }
+  .eval-row:last-child { border-bottom: none; }
+  .eval-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .eval-name { font-size: 14px; color: #D8DFEC; font-weight: 500; letter-spacing: 0.1px; }
+  .eval-weight { font-size: 11.5px; color: #6E7E97; margin-top: 2px; }
+  .eval-right { display: flex; align-items: center; gap: 8px; }
+  .clear-btn {
+    background: none; border: none; cursor: pointer;
+    color: #5E6E87; font-size: 13px; padding: 2px 6px;
+  }
+  .grade-tag {
+    padding: 5px 14px; border-radius: 6px;
+    min-width: 60px; text-align: center;
+    transition: all 0.25s;
+    border: 1px dashed #3D4A60;
+    background: transparent;
+  }
+  .grade-tag.set { border: none; }
+  .grade-tag span {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+    color: #5E6E87; letter-spacing: 0.3px;
+  }
+  .grade-tag.set span { color: #0E1A2C; }
+
+  /* Slider */
+  .grade-slider {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 3px; border-radius: 999px;
+    background: #243B5C; outline: none;
+  }
+  .grade-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent, #E8B547);
+    border: 2px solid #0E1A2C;
+    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
+    cursor: grab; transition: transform 0.15s;
+  }
+  .grade-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .grade-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.2); }
+  .grade-slider::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent, #E8B547);
+    border: 2px solid #0E1A2C;
+    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
+    cursor: grab;
+  }
+
+  /* Participación inputs (computed row) */
+  .part-inputs { display: flex; gap: 10px; margin-top: 2px; }
+  .part-input-wrap { flex: 1; }
+  .part-input-wrap label { display: block; font-size: 10px; color: #6E7E97; letter-spacing: 0.5px; margin-bottom: 5px; }
+  .part-input {
+    width: 100%; background: #0F1B30; border: 1px solid #243B5C; border-radius: 6px;
+    padding: 8px 10px; color: #E8EDF5; font-size: 13px; font-family: 'Inter', sans-serif;
+  }
+  .part-input:focus { outline: none; border-color: #5BABC4; }
+  .part-lambda { font-size: 11px; margin-top: 10px; line-height: 1.4; }
+
+  /* Progress bar */
+  .progress-wrap { margin-top: 8px; padding: 0 2px; display: flex; align-items: center; gap: 10px; }
+  .progress-track {
+    flex: 1; height: 4px; background: #1A2740; border-radius: 999px;
+    overflow: hidden; border: 1px solid #243B5C;
+  }
+  .progress-fill { height: 100%; border-radius: 999px; transition: width 0.3s ease-out, background 0.3s; }
+  .progress-pct { font-size: 10px; color: #5E6E87; letter-spacing: 1px; min-width: 28px; text-align: right; }
+
+  /* ── Verdict card ── */
+  #verdict-card { margin-top: 18px; background: #142037; border: 1px solid #1F2D44; border-radius: 14px; overflow: hidden; }
+  #verdict-header { padding: 16px 20px; border-bottom: 1px solid #1F2D44; }
+  #verdict-meta { font-size: 10px; color: #8997B0; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px; }
+  #verdict-label { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; line-height: 1.1; letter-spacing: -0.3px; }
+  #verdict-detail { font-size: 13px; color: #D8DFEC; margin-top: 6px; line-height: 1.5; }
+
+  #min-avg-section {
+    padding: 20px 20px 18px;
+    border-bottom: 1px solid #1F2D44;
+    background: linear-gradient(180deg, rgba(232,181,71,0.03) 0%, transparent 100%);
+  }
+  .min-avg-label { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
+  .min-avg-headline { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .min-avg-value { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -1.5px; }
+  .min-avg-suffix { font-size: 13px; color: #8997B0; }
+  .min-avg-detail { font-size: 12.5px; color: #8997B0; line-height: 1.5; margin-top: 4px; }
+
+  /* Visual scale 1.0 → 7.0 */
+  .scale-wrap { margin: 16px 0 4px; }
+  .scale-track {
+    position: relative; height: 6px; border-radius: 999px;
+    background: linear-gradient(90deg, #F87171 0%, #FB923C 33%, #FACC15 50%, #A3E635 66%, #4ADE80 100%);
+    opacity: 0.55;
+  }
+  .scale-marker {
+    position: absolute; top: 50%; transform: translate(-50%, -50%);
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #fff;
+    border: 3px solid #0E1A2C;
+    box-shadow: 0 0 0 2px var(--marker-color, #FACC15), 0 2px 8px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+  .scale-labels {
+    display: flex; justify-content: space-between;
+    font-size: 10px; color: #5E6E87;
+    margin-top: 8px; padding: 0 2px;
+  }
+  .scale-tick { position: relative; }
+  .scale-tick::before {
+    content: ""; position: absolute; left: 50%; top: -10px;
+    width: 1px; height: 4px; background: #3D4A60;
+    transform: translateX(-50%);
+  }
+  .scale-tick.active { color: var(--marker-color, #FACC15); font-weight: 700; }
+
+  /* Scenario picker */
+  .scenarios-block {
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px dashed #243B5C;
+  }
+  .scenarios-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
+  .scenarios-prompt { font-size: 12px; color: #B8C2D3; margin-bottom: 10px; line-height: 1.5; }
+  .scenarios-prompt b { color: #E8EDF5; }
+  .scenario-options { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .scenario-btn {
+    padding: 6px 12px; border-radius: 6px;
+    background: #0F1B30; border: 1px solid #243B5C;
+    color: #8997B0; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    font-family: 'Fraunces', serif;
+  }
+  .scenario-btn:hover { transform: translateY(-1px); }
+  .scenario-btn.active {
+    background: #FACC15; border-color: #FACC15; color: #0E1A2C;
+  }
+  .scenario-result {
+    padding: 12px 14px; border-radius: 8px;
+    background: #0F1B30; border: 1px solid #1F2D44;
+    font-size: 13px; color: #D8DFEC; line-height: 1.55;
+  }
+  .scenario-result b {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    color: #FACC15;
+  }
+  .scenario-result.impossible b { color: #F87171; }
+  .scenario-result.easy b { color: #4ADE80; }
+
+  .min-avg-extras { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #243B5C; }
+  .min-avg-extra-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #B8C2D3; line-height: 1.5; margin-bottom: 6px; }
+  .min-avg-extra-item:last-child { margin-bottom: 0; }
+  .min-avg-extra-bullet { color: #FACC15; font-weight: 700; flex-shrink: 0; }
+
+  #stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid #1F2D44; }
+  .stat-cell { padding: 14px 12px; text-align: center; }
+  .stat-cell + .stat-cell { border-left: 1px solid #1F2D44; }
+  .stat-label { font-size: 9.5px; color: #6E7E97; letter-spacing: 1.2px; font-weight: 600; margin-bottom: 4px; }
+  .stat-value { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; }
+
+  #special-checks { padding: 14px 20px; border-bottom: 1px solid #1F2D44; }
+  .checks-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
+  .check-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .check-row:last-child { margin-bottom: 0; }
+  .check-dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .check-dot.ok { background: #143020; color: #4ADE80; }
+  .check-dot.fail { background: #3A1F1F; color: #F87171; }
+  .check-dot.pending { background: #243B5C; color: #8997B0; }
+  .check-text { font-size: 13px; color: #D8DFEC; line-height: 1.3; }
+  .check-sub { font-size: 11.5px; color: #6E7E97; margin-top: 1px; }
+
+  #per-eval { padding: 14px 20px; }
+  .per-eval-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 4px; }
+  .per-eval-sub { font-size: 11px; color: #5E6E87; font-style: italic; margin-bottom: 12px; }
+  .per-eval-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1A2740; }
+  .per-eval-row:last-child { border-bottom: none; }
+  .per-eval-name { font-size: 13px; color: #D8DFEC; }
+  .per-eval-grade {
+    padding: 3px 10px; border-radius: 5px;
+    font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600;
+    min-width: 56px; text-align: center;
+  }
+
+  /* ── Footer ── */
+  #footer { margin-top: 36px; text-align: center; font-size: 11px; color: #4D5C75; line-height: 1.6; letter-spacing: 0.3px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-top">
+    <div>
+      <div id="title">Calculadora de Notas</div>
+      <div id="subtitle">Ing. Comercial UC</div>
+    </div>
+    <div id="save-msg">Guardado</div>
+  </div>
+  <div id="tabs"></div>
+</div>
+
+<div id="main">
+  <div id="course-hero">
+    <div style="flex:1;min-width:0">
+      <div id="course-name"></div>
+      <div id="course-code"></div>
+    </div>
+    <div id="avg-box" style="display:none">
+      <div id="avg-label">PROMEDIO</div>
+      <div id="avg-value"></div>
+      <div id="avg-pct"></div>
+    </div>
+  </div>
+  <div id="rules-note"></div>
+  <div id="groups-container"></div>
+  <div id="verdict-card">
+    <div id="verdict-header">
+      <div id="verdict-meta">VEREDICTO</div>
+      <div id="verdict-label"></div>
+      <div id="verdict-detail"></div>
+    </div>
+    <div id="min-avg-section" style="display:none">
+      <div class="min-avg-label">PROMEDIO MÍNIMO PARA APROBAR</div>
+      <div class="min-avg-headline">
+        <div class="min-avg-value" id="min-avg-value">—</div>
+        <div class="min-avg-suffix" id="min-avg-suffix"></div>
+      </div>
+      <div class="min-avg-detail" id="min-avg-detail"></div>
+
+      <div class="scale-wrap" id="scale-wrap" style="display:none">
+        <div class="scale-track">
+          <div class="scale-marker" id="scale-marker"></div>
+        </div>
+        <div class="scale-labels">
+          <span class="scale-tick">1.0</span>
+          <span class="scale-tick">2.0</span>
+          <span class="scale-tick">3.0</span>
+          <span class="scale-tick">4.0</span>
+          <span class="scale-tick">5.0</span>
+          <span class="scale-tick">6.0</span>
+          <span class="scale-tick">7.0</span>
+        </div>
+      </div>
+
+      <div class="scenarios-block" id="scenarios-block" style="display:none">
+        <div class="scenarios-title">SIMULA UN ESCENARIO</div>
+        <div class="scenarios-prompt" id="scenarios-prompt"></div>
+        <div class="scenario-options" id="scenario-options"></div>
+        <div class="scenario-result" id="scenario-result"></div>
+      </div>
+
+      <div class="min-avg-extras" id="min-avg-extras" style="display:none"></div>
+    </div>
+    <div id="stats-grid">
+      <div class="stat-cell"><div class="stat-label">ACTUAL</div><div class="stat-value" id="stat-actual">—</div></div>
+      <div class="stat-cell"><div class="stat-label">MÍN POSIBLE</div><div class="stat-value" id="stat-min">—</div></div>
+      <div class="stat-cell"><div class="stat-label">MÁX POSIBLE</div><div class="stat-value" id="stat-max">—</div></div>
+    </div>
+    <div id="special-checks" style="display:none">
+      <div class="checks-title">REQUISITOS ESPECIALES</div>
+      <div id="checks-list"></div>
+    </div>
+    <div id="per-eval" style="display:none">
+      <div class="per-eval-title">MÍNIMO PARA APROBAR EN CADA PENDIENTE</div>
+      <div class="per-eval-sub">si en las otras pendientes sacas 5.0 · considera todos los requisitos</div>
+      <div id="per-eval-list"></div>
+    </div>
+  </div>
+  <div id="footer">Tus notas se guardan automáticamente en este dispositivo</div>
+</div>
+
+<script>
+// ─── Course Data ──────────────────────────────────────────────────────────────
+// course.threshold: promedio ponderado final necesario para aprobar.
+// course.strictThreshold: true si la nota final debe ser ESTRICTAMENTE mayor al threshold (no basta igualar).
+// course.minEvalRules: [{ id, min, label, cappedFinalAt? }] — evaluaciones con nota mínima obligatoria,
+//   independiente del promedio. Si no se cumple, se reprueba aunque el promedio dé para aprobar.
+// course.subsetRule: chequeo de promedio ponderado sobre un subconjunto de evaluaciones (excluyendo una),
+//   usado en Micro para "promedio sin Trabajo Grupal".
+const COURSES = {
+  algebra: {
+    name: "Álgebra Lineal", fullName: "Introducción al Álgebra Lineal",
+    code: "MAT1279", color: "#6FB283", softColor: "#1F302A",
+    rulesNote: "Nota final ≥ 4.0 (notas redondeadas a 1 decimal)",
+    threshold: 4.0, minEvalRules: [],
+    groups: [
+      { label: "Interrogaciones", color: "#5BABC4", evals: [
+        { id:"i1", name:"Interrogación 1", weight:20 },
+        { id:"i2", name:"Interrogación 2", weight:25 },
+        { id:"i3", name:"Interrogación 3", weight:25 }
+      ]},
+      { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
+    ]
+  },
+  calculo: {
+    name: "Cálculo II", fullName: "Cálculo II",
+    code: "MAT1620", color: "#5B8DC4", softColor: "#1A2740",
+    rulesNote: "Promedio ponderado ≥ 4.0",
+    threshold: 4.0, minEvalRules: [],
+    groups: [
+      { label: "Laboratorio", color: "#6FB283", evals: [{ id:"lab", name:"Laboratorio", weight:10 }] },
+      { label: "Interrogaciones", color: "#5BABC4", evals: [
+        { id:"i1", name:"Interrogación 1", weight:20 },
+        { id:"i2", name:"Interrogación 2", weight:20 },
+        { id:"i3", name:"Interrogación 3", weight:20 }
+      ]},
+      { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
+    ]
+  },
+  contabilidad: {
+    name: "Contabilidad", fullName: "Contabilidad",
+    code: "EAA1210", color: "#E8975B", softColor: "#3A2A1F",
+    rulesNote: "Nota final ≥ 3.95 · Examen Final ≥ 3.0 · Controles sorpresa ajustables",
+    threshold: 3.95,
+    minEvalRules: [{ id:"e", min:3.0, label:"Examen Final" }],
+    hasSurprise: true,
+    groups: [
+      { label: "Controles", color: "#5BABC4", evals: [
+        { id:"c1", name:"Control 1", weight:10 },
+        { id:"c2", name:"Control 2", weight:10 }
+      ]},
+      { label: "Controles sorpresa", color: "#D4B748", dynamic: true, totalWeight: 10 },
+      { label: "Pruebas", color: "#D4834A", evals: [
+        { id:"p1", name:"Prueba 1", weight:20 },
+        { id:"p2", name:"Prueba 2", weight:20 }
+      ]},
+      { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
+    ]
+  },
+  micro: {
+    name: "Microeconomía", fullName: "Introducción a la Microeconomía",
+    code: "EAE1110", color: "#D86F6F", softColor: "#3A1F1F",
+    rulesNote: "N > 3.95 (estricto) · Examen ≥ 3.0 · Promedio sin Trabajo Grupal > 3.95 · Participación = λ × promedio C1/C2",
+    threshold: 3.95, strictThreshold: true,
+    minEvalRules: [{ id:"e", min:3.0, label:"Examen", cappedFinalAt:3.9 }],
+    subsetRule: { excludeId:"tg", denom:95, threshold:3.95, strict:true, label:"Promedio sin Trabajo Grupal" },
+    groups: [
+      { label: "Trabajo en equipo", color: "#A287C7", evals: [{ id:"tg", name:"Trabajo Grupal", weight:5 }] },
+      { label: "Controles y participación", color: "#5BABC4", evals: [
+        { id:"c1", name:"Control 1", weight:20/3, weightLabel:"6.67% del ramo" },
+        { id:"c2", name:"Control 2", weight:20/3, weightLabel:"6.67% del ramo" },
+        { id:"part", name:"Participación", weight:20/3, weightLabel:"6.67% del ramo", computed:true }
+      ]},
+      { label: "Pruebas", color: "#E89860", evals: [
+        { id:"p1", name:"Prueba 1", weight:22.5 },
+        { id:"p2", name:"Prueba 2", weight:22.5 }
+      ]},
+      { label: "Examen final", color: "#B85A5A", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
+    ]
+  },
+  filosofia: {
+    name: "Filosofía", fullName: "Filosofía: ¿Para qué?",
+    code: "FIL2001", color: "#E8C548", softColor: "#332C1A",
+    rulesNote: "Promedio ponderado ≥ 3.0 · Podcast ≥ 4.0",
+    threshold: 3.0,
+    minEvalRules: [{ id:"pod", min:4.0, label:"Podcast" }],
+    groups: [
+      { label: "Pruebas", color: "#5BABC4", evals: [
+        { id:"p1", name:"Prueba 1", weight:30 },
+        { id:"p2", name:"Prueba 2", weight:30 }
+      ]},
+      { label: "Trabajo en pareja", color: "#A287C7", evals: [{ id:"tp", name:"Trabajo en Pareja", weight:20 }] },
+      { label: "Podcast", color: "#D4B748", evals: [{ id:"pod", name:"Podcast", weight:20 }] },
+    ]
+  },
+  probabilidad: {
+    name: "Probabilidad", fullName: "Probabilidad y Estadística",
+    code: "EAA1510", color: "#5BC4DC", softColor: "#1F3238",
+    rulesNote: "Nota final ≥ 3.95 · Examen ≥ 2.5 · Control sorpresa ajustable",
+    threshold: 3.95,
+    minEvalRules: [{ id:"e", min:2.5, label:"Examen" }],
+    hasSurprise: true,
+    groups: [
+      { label: "Controles sorpresa", color: "#D4B748", dynamic: true, totalWeight: 5 },
+      { label: "Controles", color: "#6FB283", evals: [
+        { id:"c1", name:"Control 1", weight:10 },
+        { id:"c2", name:"Control 2", weight:10 },
+        { id:"c3", name:"Control 3", weight:10 }
+      ]},
+      { label: "Pruebas", color: "#E89860", evals: [
+        { id:"p1", name:"Prueba 1", weight:20 },
+        { id:"p2", name:"Prueba 2", weight:20 }
+      ]},
+      { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:25 }] },
+    ]
+  }
+};
+
+const VERDICTS = {
+  EMPTY:    { color:"#6E7E97", bg:"#142037",  label:"Sin notas aún" },
+  APROBADO: { color:"#4ADE80", bg:"#143020",  label:"Aprobado" },
+  REPROBADO:{ color:"#F87171", bg:"#3A1F1F",  label:"Reprobado" },
+  SEGURA:   { color:"#4ADE80", bg:"#143020",  label:"Zona segura" },
+  POSIBLE:  { color:"#FACC15", bg:"#3A2F1F",  label:"Aprobable" },
+  DIFICIL:  { color:"#FB923C", bg:"#3A271F",  label:"Modo difícil" },
+  IMPOSIBLE:{ color:"#F87171", bg:"#3A1F1F",  label:"Misión imposible" },
+};
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let state = {
+  tab: "algebra",
+  grades: { algebra:{}, calculo:{}, contabilidad:{}, micro:{}, filosofia:{}, probabilidad:{} },
+  surpriseCount: { contabilidad: 3, probabilidad: 3 },
+  scenarioPick: 5.0,
+};
+
+function loadState() {
+  try {
+    const s = localStorage.getItem("notas_uc_2026");
+    if (s) { const d = JSON.parse(s); if (d.grades) Object.assign(state, d); }
+  } catch(_) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem("notas_uc_2026", JSON.stringify(state));
+    const el = document.getElementById("save-msg");
+    el.style.display = "block";
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.style.display = "none", 1800);
+  } catch(_) {}
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function parseG(v) { const n = parseFloat(v); return isNaN(n) ? null : Math.min(7, Math.max(1, n)); }
+
+function gradeColor(g) {
+  if (g === null || g === undefined) return "#3D4A60";
+  if (g >= 5.5) return "#4ADE80";
+  if (g >= 4.5) return "#A3E635";
+  if (g >= 4.0) return "#FACC15";
+  if (g >= 3.0) return "#FB923C";
+  return "#F87171";
+}
+
+function getSurpriseCount(courseId) {
+  return (state.surpriseCount && state.surpriseCount[courseId]) || 3;
+}
+
+// Participación (Micro): λ = min(1 + 0.5 · puntos/(0.83 · máximo teórico), 1.5)
+// Participación = λ × (Control 1 + Control 2) / 2, acotado a la escala 1.0–7.0
+function computeParticipacion(courseId) {
+  const g = state.grades[courseId] || {};
+  const c1 = parseG(g["c1"]);
+  const c2 = parseG(g["c2"]);
+  const puntos = parseFloat(g["part_puntos"]);
+  const maxTeo = parseFloat(g["part_max"]);
+  if (c1 === null || c2 === null || isNaN(puntos) || isNaN(maxTeo) || maxTeo <= 0) return null;
+  const lambda = Math.min(1 + 0.5 * (puntos / (0.83 * maxTeo)), 1.5);
+  const raw = lambda * (c1 + c2) / 2;
+  return Math.min(7, Math.max(1, raw));
+}
+
+function getLambdaInfo(courseId) {
+  const g = state.grades[courseId] || {};
+  const puntos = parseFloat(g["part_puntos"]);
+  const maxTeo = parseFloat(g["part_max"]);
+  if (isNaN(puntos) || isNaN(maxTeo) || maxTeo <= 0) return null;
+  return Math.min(1 + 0.5 * (puntos / (0.83 * maxTeo)), 1.5);
+}
+
+function getEvalGrade(courseId, ev) {
+  if (ev.computed) return computeParticipacion(courseId);
+  return parseG((state.grades[courseId] || {})[ev.id]);
+}
+
+function getEvals(courseId) {
+  const evs = [];
+  for (const g of COURSES[courseId].groups) {
+    if (g.dynamic) {
+      const n = getSurpriseCount(courseId);
+      for (let i = 0; i < n; i++)
+        evs.push({ id:`s${i}`, name:`Control Sorpresa ${i+1}`, weight: g.totalWeight / n });
+    } else {
+      for (const ev of g.evals || []) evs.push(ev);
+    }
+  }
+  return evs;
+}
+
+function splitDonePending(courseId) {
+  const evs = getEvals(courseId);
+  const done = [], pending = [];
+  let earned = 0, doneW = 0, pendW = 0;
+  for (const ev of evs) {
+    const gr = getEvalGrade(courseId, ev);
+    if (gr !== null) { done.push({...ev, grade:gr}); earned += gr * ev.weight; doneW += ev.weight; }
+    else { pending.push(ev); pendW += ev.weight; }
+  }
+  return { done, pending, earned, doneW, pendW };
+}
+
+function calcCurrent(courseId) {
+  const { earned, doneW } = splitDonePending(courseId);
+  return doneW > 0 ? { avg: earned / doneW, weight: doneW } : null;
+}
+
+// Si el ramo exige nota ESTRICTAMENTE mayor (no basta igualar), usamos un epsilon mínimo
+// para que las fórmulas de "cuánto necesitas" reflejen ese ">" y no un "≥".
+function effectiveThreshold(course) {
+  return course.threshold + (course.strictThreshold ? 0.005 : 0);
+}
+
+function passesThreshold(value, course) {
+  return course.strictThreshold ? value > course.threshold : value >= course.threshold;
+}
+
+// Chequeo de "promedio de un subconjunto de evaluaciones excluyendo una" (p.ej. promedio sin
+// Trabajo Grupal en Micro). Devuelve null si el ramo no tiene esta regla.
+function checkSubsetRule(course, done, pending) {
+  const rule = course.subsetRule;
+  if (!rule) return null;
+  let earnedSub = 0, doneWSub = 0, pendWSub = 0;
+  done.forEach(d => { if (d.id !== rule.excludeId) { earnedSub += d.grade * d.weight; doneWSub += d.weight; } });
+  pending.forEach(p => { if (p.id !== rule.excludeId) { pendWSub += p.weight; } });
+  const effThr = rule.threshold + (rule.strict ? 0.005 : 0);
+  const maxSub = (earnedSub + 7 * pendWSub) / rule.denom;
+  const curSub = doneWSub > 0 ? earnedSub / doneWSub : null;
+  let hardFail = false;
+  if (pendWSub === 0) {
+    const finalSub = earnedSub / rule.denom;
+    if (rule.strict ? !(finalSub > rule.threshold) : !(finalSub >= rule.threshold)) hardFail = true;
+  } else if (maxSub < effThr) {
+    hardFail = true;
+  }
+  return { earnedSub, doneWSub, pendWSub, maxSub, curSub, hardFail, rule };
+}
+
+function analyzeGrades(courseId) {
+  const course = COURSES[courseId];
+  const { done, pending, earned, doneW, pendW } = splitDonePending(courseId);
+
+  if (!done.length) return { state:"empty", specialChecks:[], perEvalAnalysis:[] };
+
+  const thr = course.threshold;
+  const effThr = effectiveThreshold(course);
+  const total = doneW + pendW;
+  const maxFinal = (earned + 7 * pendW) / total;
+  const minFinal = (earned + 1 * pendW) / total;
+  const currentAvg = earned / doneW;
+  const uniformNeeded = pendW > 0 ? (effThr * total - earned) / pendW : null;
+  const rules = course.minEvalRules || [];
+  const cmp = course.strictThreshold ? ">" : "≥";
+
+  // ── Hard minimum-eval checks (examen, podcast, etc.) ───────────────────────
+  let hardImpossible = false, hardReason = "";
+  for (const rule of rules) {
+    const evDone = done.find(d => d.id === rule.id);
+    if (evDone && evDone.grade < rule.min) {
+      hardImpossible = true;
+      hardReason = `${rule.label} con ${evDone.grade.toFixed(1)} (mínimo ${rule.min.toFixed(1)}). Repruebas aunque tengas 7.0 en todo lo demás.` +
+        (rule.cappedFinalAt ? ` Tu nota final quedaría en ${rule.cappedFinalAt.toFixed(1)}.` : "");
+      break;
+    }
+  }
+
+  // ── Subset rule (p.ej. promedio sin Trabajo Grupal) ────────────────────────
+  const subCheck = checkSubsetRule(course, done, pending);
+  if (subCheck && subCheck.hardFail && !hardImpossible) {
+    hardImpossible = true;
+    hardReason = `Imposible alcanzar el ${subCheck.rule.label.toLowerCase()} > ${subCheck.rule.threshold.toFixed(2)}, aunque saques 7.0 en todo lo demás.`;
+  }
+
+  // ── Verdict ──────────────────────────────────────────────────────────────
+  let verdict, verdictDetail = "";
+  if (pendW === 0) {
+    const f = earned / total;
+    if (hardImpossible) { verdict = "REPROBADO"; verdictDetail = hardReason; }
+    else { verdict = passesThreshold(f, course) ? "APROBADO" : "REPROBADO"; verdictDetail = `Nota final: ${f.toFixed(2)}`; }
+  } else if (hardImpossible) {
+    verdict = "IMPOSIBLE"; verdictDetail = hardReason;
+  } else if (maxFinal < effThr) {
+    verdict = "IMPOSIBLE"; verdictDetail = `Ni con 7.0 en todo lo pendiente llegas a ${cmp} ${thr}.`;
+  } else if (minFinal >= effThr) {
+    verdict = "SEGURA"; verdictDetail = `Aprobado seguro, incluso sacando 1.0 en lo que queda.`;
+  } else if (uniformNeeded > 6.0) {
+    verdict = "DIFICIL"; verdictDetail = `Necesitas promedio ${uniformNeeded.toFixed(2)} en lo que queda. Va a estar duro.`;
+  } else if (uniformNeeded <= 4.0) {
+    verdict = "SEGURA"; verdictDetail = `Solo necesitas promedio ${uniformNeeded.toFixed(2)} en lo que queda.`;
+  } else {
+    verdict = "POSIBLE"; verdictDetail = `Necesitas promedio ${uniformNeeded.toFixed(2)} en lo que queda.`;
+  }
+
+  // ── Special checks ───────────────────────────────────────────────────────
+  const specialChecks = [];
+  for (const rule of rules) {
+    const evDone = done.find(d => d.id === rule.id);
+    const eg = evDone ? evDone.grade : null;
+    specialChecks.push({ label:`${rule.label} ≥ ${rule.min.toFixed(1)}`, passed: eg!==null ? eg>=rule.min : null, detail: eg!==null ? `Tu nota: ${eg.toFixed(1)}` : "Pendiente" });
+  }
+  if (subCheck) {
+    const passed = subCheck.pendWSub === 0
+      ? (subCheck.rule.strict ? subCheck.earnedSub/subCheck.rule.denom > subCheck.rule.threshold : subCheck.earnedSub/subCheck.rule.denom >= subCheck.rule.threshold)
+      : (subCheck.hardFail ? false : null);
+    specialChecks.push({
+      label: `${subCheck.rule.label} > ${subCheck.rule.threshold.toFixed(2)}`,
+      passed,
+      detail: subCheck.curSub !== null ? `Parcial: ${subCheck.curSub.toFixed(2)}` : "Aún sin datos"
+    });
+  }
+
+  // ── Per-eval analysis ──────────────────────────────────────────────────────
+  const perEvalAnalysis = pending.map(ev => {
+    const otherW = pendW - ev.weight;
+    let needed = (effThr * total - earned - 5.0 * otherW) / ev.weight;
+    let reason = "promedio general";
+    for (const rule of rules) {
+      if (ev.id === rule.id && rule.min > needed) { needed = rule.min; reason = `mínimo de ${rule.label.toLowerCase()} (${rule.min.toFixed(1)})`; }
+    }
+    if (subCheck && ev.id !== subCheck.rule.excludeId) {
+      const otherPendSub = pending.filter(p => p.id !== subCheck.rule.excludeId && p.id !== ev.id).reduce((s,p)=>s+p.weight, 0);
+      const effThrSub = subCheck.rule.threshold + (subCheck.rule.strict ? 0.005 : 0);
+      const nForSub = (effThrSub * subCheck.rule.denom - subCheck.earnedSub - 5.0 * otherPendSub) / ev.weight;
+      if (nForSub > needed) { needed = nForSub; reason = subCheck.rule.label.toLowerCase(); }
+    }
+    return { ...ev, needed, reason, achievable: needed <= 7.0, easy: needed <= 4.0 };
+  });
+
+  // ── Extra constraints for prominent display ──────────────────────────────
+  const extras = [];
+  for (const rule of rules) {
+    if (pending.find(p => p.id === rule.id)) {
+      extras.push({ text: `${rule.label} debe ser ≥ ${rule.min.toFixed(1)} (mínimo del ramo)` });
+    }
+  }
+  if (subCheck && subCheck.pendWSub > 0) {
+    extras.push({ text: `${subCheck.rule.label}: promedio > ${subCheck.rule.threshold.toFixed(2)} en lo que falta de ese grupo (no se compensa con lo excluido)` });
+  }
+
+  return { state:"analyzed", currentAvg, doneW, pendW, maxFinal, minFinal, uniformNeeded, verdict, verdictDetail, specialChecks, perEvalAnalysis, extras, hardImpossible };
+}
+
+// ─── Computed row (Participación) ──────────────────────────────────────────────
+function renderComputedRow(cid, ev) {
+  const g = state.grades[cid] || {};
+  const puntos = g["part_puntos"] || "";
+  const maxTeo = g["part_max"] || "";
+  const computed = computeParticipacion(cid);
+  const isSet = computed !== null;
+  const bcolor = isSet ? gradeColor(computed) : "#2A3A55";
+  const lambda = getLambdaInfo(cid);
+  const weightLabel = ev.weightLabel || `${ev.weight.toFixed(1)}% del ramo`;
+  const lambdaText = lambda !== null
+    ? `λ = ${lambda.toFixed(3)} · Participación = λ × (Control 1 + Control 2) / 2`
+    : `Completa Control 1, Control 2, puntos y máximo teórico`;
+  const lambdaStyle = lambda !== null ? "color:#8997B0;font-style:normal" : "color:#5E6E87;font-style:italic";
+
+  return `
+    <div class="eval-row" data-part-row="${cid}">
+      <div class="eval-top">
+        <div>
+          <div class="eval-name">${ev.name}</div>
+          <div class="eval-weight">${weightLabel}</div>
+        </div>
+        <div class="eval-right">
+          <div class="grade-tag ${isSet?"set":""}" style="${isSet?`background:${bcolor}`:""}">
+            <span>${isSet ? computed.toFixed(1) : "—"}</span>
+          </div>
+        </div>
+      </div>
+      <div class="part-inputs">
+        <div class="part-input-wrap">
+          <label>Puntos obtenidos</label>
+          <input type="number" class="part-input" inputmode="decimal" data-course="${cid}" data-field="part_puntos" value="${puntos}" step="0.5" min="0" placeholder="0">
+        </div>
+        <div class="part-input-wrap">
+          <label>Máximo teórico</label>
+          <input type="number" class="part-input" inputmode="decimal" data-course="${cid}" data-field="part_max" value="${maxTeo}" step="0.5" min="0" placeholder="0">
+        </div>
+      </div>
+      <div class="part-lambda" style="${lambdaStyle}">${lambdaText}</div>
+    </div>`;
+}
+
+function updateParticipacionRow(courseId) {
+  const row = document.querySelector(`[data-part-row="${courseId}"]`);
+  if (!row) return;
+  const computed = computeParticipacion(courseId);
+  const tag = row.querySelector(".grade-tag");
+  const span = tag.querySelector("span");
+  if (computed !== null) {
+    const bcolor = gradeColor(computed);
+    tag.classList.add("set");
+    tag.style.background = bcolor;
+    span.textContent = computed.toFixed(1);
+  } else {
+    tag.classList.remove("set");
+    tag.style.background = "";
+    span.textContent = "—";
+  }
+  const lambdaEl = row.querySelector(".part-lambda");
+  if (lambdaEl) {
+    const lambda = getLambdaInfo(courseId);
+    if (lambda !== null) {
+      lambdaEl.textContent = `λ = ${lambda.toFixed(3)} · Participación = λ × (Control 1 + Control 2) / 2`;
+      lambdaEl.style.color = "#8997B0";
+      lambdaEl.style.fontStyle = "normal";
+    } else {
+      lambdaEl.textContent = `Completa Control 1, Control 2, puntos y máximo teórico`;
+      lambdaEl.style.color = "#5E6E87";
+      lambdaEl.style.fontStyle = "italic";
+    }
+  }
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function render() {
+  const cid = state.tab;
+  const course = COURSES[cid];
+
+  // Tabs
+  document.getElementById("tabs").innerHTML = Object.entries(COURSES).map(([id,c]) => `
+    <button class="tab-btn ${id===cid?"active":""}" data-tab="${id}"
+      style="${id===cid ? `border-color:${c.color};background:${c.softColor};color:${c.color}` : ""}">
+      ${c.name}
+    </button>`).join("");
+
+  // Hero
+  document.getElementById("course-hero").style.background = course.softColor;
+  document.getElementById("course-hero").style.border = `1px solid ${course.color}33`;
+  document.getElementById("course-name").textContent = course.fullName;
+  document.getElementById("course-code").textContent = course.code;
+  document.getElementById("course-code").style.color = course.color;
+
+  const cur = calcCurrent(cid);
+  const avgBox = document.getElementById("avg-box");
+  if (cur) {
+    avgBox.style.display = "block";
+    document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
+    document.getElementById("avg-value").style.color = gradeColor(cur.avg);
+    document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
+  } else { avgBox.style.display = "none"; }
+
+  document.getElementById("rules-note").textContent = course.rulesNote;
+
+  // Groups
+  const gc = document.getElementById("groups-container");
+  gc.innerHTML = course.groups.map((group) => {
+    const n = getSurpriseCount(cid);
+    const evals = group.dynamic
+      ? Array.from({length: n}, (_,i) => ({ id:`s${i}`, name:`Control Sorpresa ${i+1}`, weight: group.totalWeight/n }))
+      : (group.evals || []);
+
+    const rows = evals.map((ev, ei) => {
+      if (ev.computed) return renderComputedRow(cid, ev);
+
+      const val = state.grades[cid][ev.id];
+      const isSet = val !== undefined && val !== "";
+      const num = isSet ? parseFloat(val) : 4.0;
+      const fillPct = ((num - 1) / 6) * 100;
+      const bcolor = isSet ? gradeColor(num) : "#2A3A55";
+      const weightLabel = ev.weightLabel
+        ? ev.weightLabel
+        : group.dynamic
+        ? `entra al promedio · el grupo vale ${group.totalWeight}% en total`
+        : `${ev.weight.toFixed(1)}% del ramo`;
+      return `
+        <div class="eval-row">
+          <div class="eval-top">
+            <div>
+              <div class="eval-name">${ev.name}</div>
+              <div class="eval-weight">${weightLabel}</div>
+            </div>
+            <div class="eval-right">
+              ${isSet ? `<button class="clear-btn" data-course="${cid}" data-id="${ev.id}">×</button>` : ""}
+              <div class="grade-tag ${isSet?"set":""}" style="${isSet?`background:${bcolor}`:""}">
+                <span>${isSet ? num.toFixed(1) : "—"}</span>
+              </div>
+            </div>
+          </div>
+          <input type="range" class="grade-slider" min="1" max="7" step="0.1"
+            value="${num}" data-course="${cid}" data-id="${ev.id}" data-set="${isSet}"
+            style="--accent:${group.color}">
+          <div class="progress-wrap">
+            <div class="progress-track">
+              <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${isSet?`box-shadow:0 0 8px ${bcolor}66`:""};"></div>
+            </div>
+            <div class="progress-pct">${isSet ? Math.round(fillPct)+"%" : "—"}</div>
+          </div>
+        </div>`;
+    }).join("");
+
+    const surpriseControls = group.dynamic ? `
+      <div class="surprise-controls">
+        <span class="surprise-label">cantidad</span>
+        ${[1,2,3,4,5,6].map(num=>`<button class="sn-btn ${num===n?"active":""}" data-n="${num}" data-course="${cid}"
+          style="${num===n?`background:${group.color};border-color:${group.color};color:#0E1A2C`:""}">${num}</button>`).join("")}
+      </div>` : "";
+
+    return `
+      <div class="group-wrap">
+        <div class="group-header">
+          <div class="group-bar" style="background:${group.color}"></div>
+          <span class="group-label" style="color:${group.color}">${group.label}${group.dynamic ? ` · promedio, ${group.totalWeight}%` : ""}</span>
+          ${surpriseControls}
+        </div>
+        <div class="group-card">${rows}</div>
+      </div>`;
+  }).join("");
+
+  // Verdict
+  renderVerdict();
+}
+
+function renderVerdict() {
+  const cid = state.tab;
+  const a = analyzeGrades(cid);
+  const v = VERDICTS[a.verdict || "EMPTY"];
+
+  document.getElementById("verdict-header").style.background = v.bg;
+  document.getElementById("verdict-label").textContent = v.label;
+  document.getElementById("verdict-label").style.color = v.color;
+  document.getElementById("verdict-detail").textContent = a.verdictDetail || "";
+  document.getElementById("verdict-detail").style.display = a.verdictDetail ? "block" : "none";
+
+  const statActual = document.getElementById("stat-actual");
+  const statMin = document.getElementById("stat-min");
+  const statMax = document.getElementById("stat-max");
+  if (a.state === "analyzed") {
+    statActual.textContent = a.currentAvg.toFixed(2);
+    statActual.style.color = gradeColor(a.currentAvg);
+    statMin.textContent = a.minFinal.toFixed(2);
+    statMin.style.color = gradeColor(a.minFinal);
+    statMax.textContent = a.maxFinal.toFixed(2);
+    statMax.style.color = gradeColor(a.maxFinal);
+  } else {
+    [statActual, statMin, statMax].forEach(el => { el.textContent = "—"; el.style.color = "#3D4A60"; });
+  }
+
+  // Minimum average needed (uniform across pending) + extra constraints + scenarios
+  const minAvgSection = document.getElementById("min-avg-section");
+  const scaleWrap = document.getElementById("scale-wrap");
+  const scenariosBlock = document.getElementById("scenarios-block");
+
+  if (a.state === "analyzed" && a.pendW > 0 && !a.hardImpossible) {
+    minAvgSection.style.display = "block";
+    const u = a.uniformNeeded;
+    const valueEl = document.getElementById("min-avg-value");
+    const suffixEl = document.getElementById("min-avg-suffix");
+    const detailEl = document.getElementById("min-avg-detail");
+    const extrasEl = document.getElementById("min-avg-extras");
+    const pendCount = a.perEvalAnalysis.length;
+
+    if (u > 7.0) {
+      valueEl.textContent = "imposible";
+      valueEl.style.color = "#F87171";
+      valueEl.style.fontSize = "36px";
+      suffixEl.textContent = "";
+      detailEl.innerHTML = `Ni con 7.0 en todo lo que queda alcanzas el promedio mínimo.`;
+      scaleWrap.style.display = "none";
+      scenariosBlock.style.display = "none";
+    } else if (u <= 1.0) {
+      valueEl.textContent = "1.0";
+      valueEl.style.color = "#4ADE80";
+      valueEl.style.fontSize = "56px";
+      suffixEl.textContent = "promedio";
+      detailEl.innerHTML = `Ya tienes el promedio asegurado, incluso con la nota mínima en lo que falta.`;
+      scaleWrap.style.display = "block";
+      const markerPos = ((1.0 - 1) / 6) * 100;
+      document.getElementById("scale-marker").style.left = markerPos + "%";
+      document.getElementById("scale-marker").style.setProperty("--marker-color", "#4ADE80");
+      scenariosBlock.style.display = "none";
+    } else {
+      const displayU = Math.max(1.0, u);
+      const uColor = gradeColor(displayU);
+      valueEl.textContent = displayU.toFixed(2);
+      valueEl.style.color = uColor;
+      valueEl.style.fontSize = "56px";
+      suffixEl.textContent = pendCount === 1 ? "en la pendiente" : "promedio";
+      if (pendCount === 1) {
+        detailEl.innerHTML = `nota mínima exacta que necesitas en <b style="color:#D8DFEC">${a.perEvalAnalysis[0].name}</b>.`;
+      } else {
+        detailEl.innerHTML = `que necesitas <b style="color:#D8DFEC">en promedio</b> entre las ${pendCount} pendientes. Puedes compensar — sacar más en una y menos en otra.`;
+      }
+
+      // Scale
+      scaleWrap.style.display = "block";
+      const markerPos = ((displayU - 1) / 6) * 100;
+      const marker = document.getElementById("scale-marker");
+      marker.style.left = markerPos + "%";
+      marker.style.setProperty("--marker-color", uColor);
+
+      // Scenarios (only when 2+ pending)
+      if (pendCount >= 2) {
+        scenariosBlock.style.display = "block";
+        renderScenarios(a, cid);
+      } else {
+        scenariosBlock.style.display = "none";
+      }
+    }
+
+    // Extras
+    if (a.extras && a.extras.length > 0) {
+      extrasEl.style.display = "block";
+      extrasEl.innerHTML = `<div style="font-size:10px;color:#6E7E97;letter-spacing:1.5px;font-weight:600;margin-bottom:8px">PERO ADEMÁS</div>` +
+        a.extras.map(e => `
+          <div class="min-avg-extra-item">
+            <span class="min-avg-extra-bullet">•</span>
+            <span>${e.text}</span>
+          </div>`).join("");
+    } else {
+      extrasEl.style.display = "none";
+    }
+  } else if (a.state === "analyzed" && a.hardImpossible) {
+    minAvgSection.style.display = "block";
+    const valueEl = document.getElementById("min-avg-value");
+    const suffixEl = document.getElementById("min-avg-suffix");
+    const detailEl = document.getElementById("min-avg-detail");
+    const extrasEl = document.getElementById("min-avg-extras");
+    valueEl.textContent = "imposible";
+    valueEl.style.color = "#F87171";
+    valueEl.style.fontSize = "36px";
+    suffixEl.textContent = "";
+    detailEl.innerHTML = `Ya no puedes aprobar este ramo por una restricción especial.`;
+    extrasEl.style.display = "none";
+    scaleWrap.style.display = "none";
+    scenariosBlock.style.display = "none";
+  } else { minAvgSection.style.display = "none"; }
+
+  // Special checks
+  const checksSection = document.getElementById("special-checks");
+  if (a.specialChecks && a.specialChecks.length) {
+    checksSection.style.display = "block";
+    document.getElementById("checks-list").innerHTML = a.specialChecks.map(c => `
+      <div class="check-row">
+        <div class="check-dot ${c.passed===true?"ok":c.passed===false?"fail":"pending"}">
+          ${c.passed===true?"✓":c.passed===false?"×":"−"}
+        </div>
+        <div>
+          <div class="check-text">${c.label}</div>
+          <div class="check-sub">${c.detail}</div>
+        </div>
+      </div>`).join("");
+  } else { checksSection.style.display = "none"; }
+
+  // Per-eval breakdown
+  const perEvalSection = document.getElementById("per-eval");
+  if (a.perEvalAnalysis && a.perEvalAnalysis.length) {
+    perEvalSection.style.display = "block";
+    document.getElementById("per-eval-list").innerHTML = a.perEvalAnalysis.map(ev => {
+      const n = ev.needed;
+      const ok = ev.achievable;
+      const disp = Math.max(1.0, n);
+      const bg = !ok ? "#3A1F1F" : n <= 4.0 ? "#143020" : n > 6.0 ? "#3A271F" : "#3A2F1F";
+      const fg = !ok ? "#F87171" : n <= 4.0 ? "#4ADE80" : n > 6.0 ? "#FB923C" : "#FACC15";
+      const reasonHtml = `<div style="font-size:10px;color:#5E6E87;margin-top:2px;font-style:italic">por ${ev.reason}</div>`;
+      return `
+        <div class="per-eval-row" style="align-items:flex-start;padding:10px 0">
+          <div>
+            <div class="per-eval-name">${ev.name}</div>
+            ${reasonHtml}
+          </div>
+          <div class="per-eval-grade" style="background:${bg};color:${fg};margin-top:2px">${ok ? disp.toFixed(1) : "imposible"}</div>
+        </div>`;
+    }).join("");
+  } else { perEvalSection.style.display = "none"; }
+}
+
+// ─── Scenarios renderer ──────────────────────────────────────────────────────
+function renderScenarios(a, courseId) {
+  const course = COURSES[courseId];
+  const effThr = effectiveThreshold(course);
+  const total = a.doneW + a.pendW;
+  const earned = a.currentAvg * a.doneW;
+
+  // Pick the highest-weight pending evaluation as the "anchor" for scenarios
+  const sorted = [...a.perEvalAnalysis].sort((x, y) => y.weight - x.weight);
+  const anchor = sorted[0];
+  const others = sorted.slice(1);
+  const otherTotalW = others.reduce((sum, e) => sum + e.weight, 0);
+
+  const picks = [3.0, 4.0, 5.0, 6.0, 7.0];
+  const pick = state.scenarioPick;
+
+  let neededInOthers = (effThr * total - earned - pick * anchor.weight) / otherTotalW;
+  let constraintReason = null;
+
+  const rule = (course.minEvalRules || []).find(r => r.id === anchor.id);
+  if (rule && pick < rule.min) {
+    constraintReason = `${rule.label.toLowerCase()} no puede ser < ${rule.min.toFixed(1)}`;
+  }
+
+  if (!constraintReason && course.subsetRule && anchor.id !== course.subsetRule.excludeId && otherTotalW > 0) {
+    const sr = course.subsetRule;
+    const { done, pending } = splitDonePending(courseId);
+    let earnedSub = 0, otherPendSub = 0;
+    done.forEach(d => { if (d.id !== sr.excludeId) earnedSub += d.grade * d.weight; });
+    pending.forEach(p => { if (p.id !== sr.excludeId && p.id !== anchor.id) otherPendSub += p.weight; });
+    if (otherPendSub > 0) {
+      const effThrSub = sr.threshold + (sr.strict ? 0.005 : 0);
+      const neededSub = (effThrSub * sr.denom - earnedSub - pick * anchor.weight) / otherPendSub;
+      if (neededSub > neededInOthers) neededInOthers = neededSub;
+    }
+  }
+
+  const promptEl = document.getElementById("scenarios-prompt");
+  promptEl.innerHTML = `Si en <b>${anchor.name}</b> sacas:`;
+
+  const optionsEl = document.getElementById("scenario-options");
+  optionsEl.innerHTML = picks.map(p => `
+    <button class="scenario-btn ${p === pick ? "active" : ""}" data-pick="${p}">
+      ${p.toFixed(1)}
+    </button>`).join("");
+
+  const resultEl = document.getElementById("scenario-result");
+  const otherCount = others.length;
+  const otherNames = otherCount === 1 ? others[0].name : `las otras ${otherCount} pendientes`;
+
+  if (constraintReason) {
+    resultEl.className = "scenario-result impossible";
+    resultEl.innerHTML = `Con esa nota repruebas: <b>${constraintReason}</b>.`;
+  } else if (neededInOthers > 7.0) {
+    resultEl.className = "scenario-result impossible";
+    resultEl.innerHTML = `Necesitarías <b>${neededInOthers.toFixed(2)}</b> en ${otherNames}, pero el máximo es 7.0. <b>Imposible</b> con ese ${anchor.name}.`;
+  } else if (neededInOthers <= 1.0) {
+    resultEl.className = "scenario-result easy";
+    resultEl.innerHTML = `Apruebas con cualquier nota en ${otherNames}. <b>¡Listo!</b>`;
+  } else {
+    const disp = Math.max(1.0, neededInOthers);
+    resultEl.className = "scenario-result";
+    if (otherCount === 1) {
+      resultEl.innerHTML = `→ Necesitas <b>${disp.toFixed(2)}</b> en ${others[0].name}.`;
+    } else {
+      resultEl.innerHTML = `→ Necesitas <b>${disp.toFixed(2)}</b> en promedio en ${otherNames}.`;
+    }
+  }
+}
+
+// ─── Events ───────────────────────────────────────────────────────────────────
+document.addEventListener("click", e => {
+  // Tab switch
+  const tab = e.target.closest("[data-tab]");
+  if (tab) { state.tab = tab.dataset.tab; render(); return; }
+
+  // Clear grade
+  const clr = e.target.closest("[data-course][data-id].clear-btn");
+  if (clr) {
+    delete state.grades[clr.dataset.course][clr.dataset.id];
+    saveState(); render(); return;
+  }
+
+  // Surprise count
+  const sn = e.target.closest(".sn-btn");
+  if (sn) {
+    if (!state.surpriseCount) state.surpriseCount = {};
+    state.surpriseCount[sn.dataset.course] = parseInt(sn.dataset.n);
+    saveState(); render(); return;
+  }
+
+  // Scenario pick
+  const sc = e.target.closest(".scenario-btn");
+  if (sc) { state.scenarioPick = parseFloat(sc.dataset.pick); renderVerdict(); return; }
+});
+
+document.addEventListener("input", e => {
+  if (e.target.classList.contains("grade-slider")) {
+    const { course, id } = e.target.dataset;
+    state.grades[course][id] = e.target.value;
+    saveState();
+    renderVerdict();
+
+    // Update the row visuals without full re-render
+    const num = parseFloat(e.target.value);
+    const fillPct = ((num - 1) / 6) * 100;
+    const bcolor = gradeColor(num);
+    const row = e.target.closest(".eval-row");
+    if (row) {
+      row.querySelector(".grade-tag").classList.add("set");
+      row.querySelector(".grade-tag").style.background = bcolor;
+      row.querySelector(".grade-tag span").textContent = num.toFixed(1);
+      row.querySelector(".progress-fill").style.width = fillPct + "%";
+      row.querySelector(".progress-fill").style.background = bcolor;
+      row.querySelector(".progress-fill").style.boxShadow = `0 0 8px ${bcolor}66`;
+      row.querySelector(".progress-pct").textContent = Math.round(fillPct) + "%";
+      // Add clear button if not there
+      const evalRight = row.querySelector(".eval-right");
+      if (!evalRight.querySelector(".clear-btn")) {
+        const btn = document.createElement("button");
+        btn.className = "clear-btn";
+        btn.dataset.course = course;
+        btn.dataset.id = id;
+        btn.textContent = "×";
+        evalRight.insertBefore(btn, evalRight.firstChild);
+      }
+    }
+
+    // If this slider is Control 1/2 of a course with Participación, refresh that row too
+    updateParticipacionRow(course);
+
+    // Update hero avg
+    const cur = calcCurrent(state.tab);
+    const avgBox = document.getElementById("avg-box");
+    if (cur) {
+      avgBox.style.display = "block";
+      document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
+      document.getElementById("avg-value").style.color = gradeColor(cur.avg);
+      document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
+    }
+  } else if (e.target.classList.contains("part-input")) {
+    const { course, field } = e.target.dataset;
+    state.grades[course][field] = e.target.value;
+    saveState();
+    renderVerdict();
+    updateParticipacionRow(course);
+
+    const cur = calcCurrent(state.tab);
+    const avgBox = document.getElementById("avg-box");
+    if (cur) {
+      avgBox.style.display = "block";
+      document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
+      document.getElementById("avg-value").style.color = gradeColor(cur.avg);
+      document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
+    } else {
+      avgBox.style.display = "none";
+    }
+  }
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+loadState();
+render();
+</script>
+</body>
+</html>
