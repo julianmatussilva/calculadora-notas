@@ -142,6 +142,33 @@
     cursor: grab;
   }
 
+  /* Laboratorio: mismos sliders que el resto, en subtareas T1/T2/T3 */
+  .lab-tasks { display: flex; flex-direction: column; gap: 16px; margin-top: 2px; }
+  .lab-task-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .lab-task-name { font-size: 12.5px; color: #A8B4C7; font-weight: 500; letter-spacing: 0.2px; }
+  .lab-task-slider {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 3px; border-radius: 999px;
+    background: #243B5C; outline: none;
+  }
+  .lab-task-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent, #E8B547);
+    border: 2px solid #0E1A2C;
+    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
+    cursor: grab; transition: transform 0.15s;
+  }
+  .lab-task-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .lab-task-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.2); }
+  .lab-task-slider::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent, #E8B547);
+    border: 2px solid #0E1A2C;
+    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
+    cursor: grab;
+  }
+
   /* Participación inputs (computed row) */
   .part-inputs { display: flex; gap: 10px; margin-top: 2px; }
   .part-input-wrap { flex: 1; }
@@ -740,11 +767,37 @@ function analyzeGrades(courseId) {
 }
 
 // ─── Computed row (Laboratorio) ────────────────────────────────────────────────
-function renderLaboratorioRow(cid, ev) {
+function renderLabTaskSlider(cid, field, label) {
   const g = state.grades[cid] || {};
-  const t1 = g["lab_t1"] || "";
-  const t2 = g["lab_t2"] || "";
-  const t3 = g["lab_t3"] || "";
+  const val = g[field];
+  const hasVal = val !== undefined && val !== "";
+  const num = hasVal ? parseFloat(val) : 4.0;
+  const fillPct = ((num - 1) / 6) * 100;
+  const bcolor = hasVal ? gradeColor(num) : "#2A3A55";
+  return `
+    <div class="lab-task" data-lab-task="${cid}:${field}">
+      <div class="lab-task-top">
+        <span class="lab-task-name">${label}</span>
+        <div class="eval-right">
+          ${hasVal ? `<button class="clear-btn" data-course="${cid}" data-id="${field}">×</button>` : ""}
+          <div class="grade-tag ${hasVal?"set":""}" style="${hasVal?`background:${bcolor}`:""}">
+            <span>${hasVal ? num.toFixed(1) : "—"}</span>
+          </div>
+        </div>
+      </div>
+      <input type="range" class="lab-task-slider" min="1" max="7" step="0.1"
+        value="${num}" data-course="${cid}" data-id="${field}" data-set="${hasVal}"
+        style="--accent:#6FB283">
+      <div class="progress-wrap">
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${hasVal?`box-shadow:0 0 8px ${bcolor}66`:""};"></div>
+        </div>
+        <div class="progress-pct">${hasVal ? Math.round(fillPct)+"%" : "—"}</div>
+      </div>
+    </div>`;
+}
+
+function renderLaboratorioRow(cid, ev) {
   const computed = computeLaboratorio(cid);
   const isSet = computed !== null;
   const bcolor = isSet ? gradeColor(computed) : "#2A3A55";
@@ -753,6 +806,12 @@ function renderLaboratorioRow(cid, ev) {
     ? `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`
     : `Completa las 3 tareas · NL = (T1 + T2 + T3) / 3`;
   const formulaStyle = isSet ? "color:#8997B0;font-style:normal" : "color:#5E6E87;font-style:italic";
+
+  const taskRows = [
+    ["lab_t1", "Tarea 1"],
+    ["lab_t2", "Tarea 2"],
+    ["lab_t3", "Tarea 3"],
+  ].map(([field, label]) => renderLabTaskSlider(cid, field, label)).join("");
 
   return `
     <div class="eval-row" data-lab-row="${cid}">
@@ -767,20 +826,7 @@ function renderLaboratorioRow(cid, ev) {
           </div>
         </div>
       </div>
-      <div class="part-inputs">
-        <div class="part-input-wrap">
-          <label>Tarea 1</label>
-          <input type="number" class="part-input lab-input" inputmode="decimal" data-course="${cid}" data-field="lab_t1" value="${t1}" step="0.1" min="1" max="7" placeholder="—">
-        </div>
-        <div class="part-input-wrap">
-          <label>Tarea 2</label>
-          <input type="number" class="part-input lab-input" inputmode="decimal" data-course="${cid}" data-field="lab_t2" value="${t2}" step="0.1" min="1" max="7" placeholder="—">
-        </div>
-        <div class="part-input-wrap">
-          <label>Tarea 3</label>
-          <input type="number" class="part-input lab-input" inputmode="decimal" data-course="${cid}" data-field="lab_t3" value="${t3}" step="0.1" min="1" max="7" placeholder="—">
-        </div>
-      </div>
+      <div class="lab-tasks">${taskRows}</div>
       <div class="part-lambda" style="${formulaStyle}">${formulaText}</div>
     </div>`;
 }
@@ -789,7 +835,7 @@ function updateLaboratorioRow(courseId) {
   const row = document.querySelector(`[data-lab-row="${courseId}"]`);
   if (!row) return;
   const computed = computeLaboratorio(courseId);
-  const tag = row.querySelector(".grade-tag");
+  const tag = row.querySelector(".eval-top .grade-tag");
   const span = tag.querySelector("span");
   if (computed !== null) {
     const bcolor = gradeColor(computed);
@@ -1282,11 +1328,37 @@ document.addEventListener("input", e => {
       document.getElementById("avg-value").style.color = gradeColor(cur.avg);
       document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
     }
-  } else if (e.target.classList.contains("lab-input")) {
-    const { course, field } = e.target.dataset;
-    state.grades[course][field] = e.target.value;
+  } else if (e.target.classList.contains("lab-task-slider")) {
+    const { course, id } = e.target.dataset;
+    state.grades[course][id] = e.target.value;
     saveState();
     renderVerdict();
+
+    // Update this task's own visuals (tag + progress bar)
+    const num = parseFloat(e.target.value);
+    const fillPct = ((num - 1) / 6) * 100;
+    const bcolor = gradeColor(num);
+    const taskRow = e.target.closest(".lab-task");
+    if (taskRow) {
+      taskRow.querySelector(".grade-tag").classList.add("set");
+      taskRow.querySelector(".grade-tag").style.background = bcolor;
+      taskRow.querySelector(".grade-tag span").textContent = num.toFixed(1);
+      taskRow.querySelector(".progress-fill").style.width = fillPct + "%";
+      taskRow.querySelector(".progress-fill").style.background = bcolor;
+      taskRow.querySelector(".progress-fill").style.boxShadow = `0 0 8px ${bcolor}66`;
+      taskRow.querySelector(".progress-pct").textContent = Math.round(fillPct) + "%";
+      const evalRight = taskRow.querySelector(".eval-right");
+      if (!evalRight.querySelector(".clear-btn")) {
+        const btn = document.createElement("button");
+        btn.className = "clear-btn";
+        btn.dataset.course = course;
+        btn.dataset.id = id;
+        btn.textContent = "×";
+        evalRight.insertBefore(btn, evalRight.firstChild);
+      }
+    }
+
+    // Refresh the computed Laboratorio (NL) summary tag
     updateLaboratorioRow(course);
 
     const cur = calcCurrent(state.tab);
@@ -1296,8 +1368,6 @@ document.addEventListener("input", e => {
       document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
       document.getElementById("avg-value").style.color = gradeColor(cur.avg);
       document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
-    } else {
-      avgBox.style.display = "none";
     }
   } else if (e.target.classList.contains("part-input")) {
     const { course, field } = e.target.dataset;
