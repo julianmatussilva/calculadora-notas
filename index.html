@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Notas · Ing. Comercial UC</title>
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQ2FsY3VsYWRvcmEgZGUgTm90YXMgLSBJbmcuIENvbWVyY2lhbCBVQyIsInNob3J0X25hbWUiOiJOb3RhcyBVQyIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBFMUEyQyIsInRoZW1lX2NvbG9yIjoiIzBFMUEyQyIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQUlBQUFEZHZ2dFFBQUFES1VsRVFWUjRuTzNkSVc1VVVSU0E0U25CMUJBU0dwcDBEVWhrTFJaRndpTFlBRXRnQTEwRUNRcUxyV1FqRUVod1dNUVFVTFIzN3M4dGZlWDc5RGt2Vi95NUhmRTZjL1RnN01rT1p0Mzcxd2RnMndSRUlpQVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJamsvcjgrQURQT0wxK01qRjJldjF0OWtpTmY4N3M1Zy9YOHNqUWpmOEkyNXRCNjVsYkdDV2hMcGxOWTE1Q0FTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWdFUkNJZ0VnR1JDSWhFUUNRQ0loRVFpWUJJQkVUaXZ6TFd1dmg0UERqNTZ1bjNwU2RaeEEyMDBIZzkrK0dENW04SkFhMHlWOFBtR2hMUUVxV0RiVFVrSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWk4MHZyYmwvZWZCaWRQbnA4dVBjbUd1SUYrR3E5blAzelEvQjBtb04zdXdIcmkxaDBqb05TQmhnUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUXlWWmZhZjM2K3VIZzVLTTMzeGFlNDcrM3lSdG92Sjc5OEVIekhHUjdBYzNWb0tGRk5oWlE2VUJESzJ3c0lHNGJBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSWJ1S1Yxczh2bjQyTVBYNzdZZlZKK091VzMwQ0Q5ZXdueDRlNUpkWUdOQkdFaHJabFlVRFRLV2hvUTN5SUpoRVFpWUJJQkVRaUlCSUJrUWlJUkVBa0FpSVJFSW1BU0FSRUlpQVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUpaR05EMGwyWmVzVmgrQlA1UHV5ZlBUNmVmK2FmZFYwKy9Uei96aXQzTDgzZHp6NXhldkpZYmlHUnRRQk9YMExVcmM1ZlExVnR6bDlEVlczT1gwTFZiRTNmSnV1dG50OXNkUFRoN3N1N3BleXUrSjNyOFIrREhnL3Z5L3RQZzVIaHdGeCtQQnljUEN1Nzg4c1hJMk5KMDltNGlJTzR3bjRGSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTSDRBRXAxMG14MlB3TkVBQUFBQVNVVk9SSzVDWUlJPSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55In0seyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQUlBQUFCN0drT3RBQUFLQlVsRVFWUjRuTzNaTVk1Y1JSUkEwVGFhaE1SQ01nTEphM0JJNkpUVUVSS0xZQU1zZ1Eyd0NDUWlVbEtIYkFSa0pESlNBaU5raGhIQ3pLOWZyL3VlczRDcUY3MWIzZi9KMCtjdkxnRDBmTEI3QUFEMkVBQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlpNjJ6MEF3Tis4ZlAzRnVzTmZ2L3grM2VGWDU4blQ1eTkyendCd3VTeGUvZmNvd1VVQWdBbk9YUDN2aW1mQU53QmdzMTNiZisvVkV3Z0FzTlAyRmJ4OWdJMEVBTmhteVBJZE1zYjVCQURZWTlUYUhUWE1hUVFBMkdEZ3doMDQwbW9DQUJBbEFNRFp4cjYxeHc2MmlBQUFSQWtBY0tyaHIremg0eDFMQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJT3B1OXdEQSsvbjJwdzhYbmZ6Vlo3OHZPcG1aQkFDdXhyclZmKzk4SllnUUFMZ0NxMWYvZzlmSndNM3pEUUNtTzNuN2I3K1gwd2dBakxaM0MydkFiUk1BbUd2Qy9wMHdBNHNJQUF3MVovUE9tWVJqQ1FCTU5HM25UcHVIUXdnQVFKUUF3RGd6bjlzenArSXhCQUFnU2dCZ2xza1A3Y216OFQ4SUFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCQWxBQUFSQWtBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFM2UwZUFBNzI1b2VmRjUzODhhdFBGNTBNV3dnQXQyUGQ2cjkzdmhKd0d3U0FXN0I2OVQ5NG5ReHc3WHdENE9xZHZQMjMzd3RIRVFDdTI5NHRyQUZjTlFIZ2lrM1l2eE5tZ1A5SEFMaFdjemJ2bkVuZ3ZRZ0FWMm5henAwMkQvd1hBZ0FRSlFCY241blA3WmxUd2I4UUFJQW9BZURLVEg1b1Q1NE4va2tBQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpN25ZUHdObCsvZnFqUlNjLysrYTNSU2NES3doQXlMclZmKzk4SllDcklBQUpxMWYvZzlmSkFBem5HOER0TzNuN2I3OFgrSThFNE1idDNjSWFBSk1Kd0MyYnNIOG56QUE4U0FCdTFwek5PMmNTNEYwQ2NKdW03ZHhwOHdBWEFRRElFb0FiTlBPNVBYTXFLQk1BZ0NnQnVEV1RIOXFUWjRNZ0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlCSUFnQ2dCQUlnU0FJQW9BUUNJRWdDQUtBRUFpQklBZ0NnQkFJZ1NBSUFvQVFDSUVnQ0FLQUVBaUJJQWdDZ0JBSWdTQUlBb0FRQ0lFZ0NBS0FFQWlMcmJQY0FzdjN6NStickRQL251eDNXSEE3d3ZBZmpUMHRWLzd3b2xBQ1lRZ0ROVy80TTN5Z0N3Vi8wYndQbmJmOExWQUpkNEFMYXY0TzBEQUdYZEFBeFp2a1BHQUlLaUFSaTFka2NOQTNRVUF6Qnc0UTRjQ2JoNXhRQUFjQWtHWU94YmUreGd3SzNLQlFDQXQxb0JHUDdLSGo0ZWNHTmFBUURnTHdJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVYTBBZlBMZGo3dEgrRGVIalBmc205OGVmOGdpaDh6MjhhdFBIMy9JSW9mTTl0Vm52ei8ra0VVT21lMzF5KzhmZjhnNnc4YzdWaXNBQVB4RkFBQ2ljZ0VZK3kvUWdZUE4vQmZvd0tsbS9ndDA0RlF6L3dVNmNLcXhmN09NSFd5UlhBQUFlS3NZZ0lFL0FnNGZhZHFQZ01Qbm1mWWo0UEI1cHYwSU9IeWVnVy90Z1NPdFZnekFaVmdERmcwenB3R0xKcG5UZ0VXVHpHbkFva2xHTGR4Unc1d21Hb0RMbUFZc0hXTkNBNWJPTUtFQlMyZVkwSUNsTXd4WnUwUEdPRjgzQUpjQkRUaGhnTDBOT09IMnZRMDQ0ZmE5RFRqaDl1M0xkL3NBRzZVRGNObmFnTk91M3RXQTArN2QxWURUN3QzVmdOUHUzYmlDeTl2L2NyazhlZnI4eGU0WlJ2amx5ODlQdTJ0WGRYNzkrcU56THRxVm5EYy8vSHpPUmJ1UzgrMVBINTV6MGE3a3ZIejl4V2wzeFZmL1d3THdOMHN6c1AwZnA3ZldaV0RDSjRmTHlneE0rT1J3V1ptQkNaOGNMb3N6WU8rL1N3QUFvdXJmQUFDeUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0RxRDI0aU1QUTMyUlZMQUFBQUFFbEZUa1N1UW1DQyIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55In1dfQ==">
-<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAhElEQVR4nGPkk9JhoCVgoqnpoxYMCgtYqGWQzZEQOPuIzRo4e+gH0SCOg6lnOOHsbJPvuJSNqCB6s+klMnclgwIxuoZ9EL2tEICz/zO8xK0QJxh+QfQq3BXOFlu5m3ILhn4QjVowiC1AS6PCHR+QuSJ+4nA2WmWAXCEzMDAwjjYdh78FANDlF16B/RXJAAAAAElFTkSuQmCC">
-<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAADKUlEQVR4nO3dIW5UURSA4SnB1BASGpp0DUhkLRZFwiLYAEtgA10ECQqLrWQjEEhwWMQQULR37s8tfeX79DkvV/y5HfE6c/Tg7MkOZt371wdg2wREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIjk/r8+ADPOL1+MjF2ev1t9kiNf87s5g/X8sjQjf8I25tB65lbGCWhLplNY15CASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBETivzLWuvh4PDj56un3pSdZxA200Hg9++GD5m8JAa0yV8PmGhLQEqWDbTUkIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEi80vrbl/efBidPnp8uPcmGuIF+Gq9nP3zQ/B0moN3uwHri1h0joNSBhgREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQyVZfaf36+uHg5KM33xae47+3yRtovJ798EHzHGR7Ac3VoKFFNhZQ6UBDK2wsIG4bAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIbuKV1s8vn42MPX77YfVJ+OuW30CD9ewnx4e5JdYGNBGEhrZlYUDTKWhoQ3yIJhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiJZGND0l2ZesVh+BP5PuyfPT6ef+afdV0+/Tz/zit3L83dzz5xevJYbiGRtQBOX0LUrc5fQ1Vtzl9DVW3OX0LVbE3fJuutnt9sdPTh7su7peyu+J3r8R+DHg/vy/tPg5HhwFx+PBycPCu788sXI2NJ09m4iIO4wn4FIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASH4AEp10mx2PwNEAAAAASUVORK5CYII=">
-<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADAklEQVR4nO3dMW4TQRiA0QTR0CAkEEg5Q0rKtLRUSByCC3AELsAhkFLR0qbMRUBBoqOlsETFZ68n3njNvlf/sxppPo1drOzzpxeXZ/Avj469AZZLHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkB4fewOkq5t3O2durq7n28C5H4xbpill/DVTIj5WlmivMgbmJxLH4oyd9Bx9iIMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgeYf0YD7fPpky9uH177l3cihujsOYWMZmcvrwcYnjAAYO+yT6EMd9DR/z8vsQB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcpFW/CXb39fvOmRdvXz3ATpZpvTfHlDI2YxMn/z8rjWPf815nH2uMY+ykV9jHGuNgInGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQTulNsJ8fn00Ze/7p17z7WI2TuTkmlrGZnD7MFqcRx8Bh6+P+TiCO4WPWxz2dQBwcizhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI874J9uP9m50zL798m3UPDJvx5phSxmZs4iQPbK449j1vfSzQLHGMnbQ+lsYXUpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgzRLH2C851arhP/SrhS/evhp4Wq368Pr3wNO2LLy5uh542tiq7dwcpLni2Pfy2D4/cHlsX7Lv5bF9fuDy2L5k32tgjmvj7Ozs/OnF5RzP3Tjsrwke/H9l775+3zkzPaPPt0+mjE0v6erm3c6ZmbLYmDcOTprvHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkP4AMlV0g16uLbUAAAAASUVORK5CYII=">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <meta name="theme-color" content="#0E1A2C">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -391,10 +391,10 @@ const COURSES = {
   calculo: {
     name: "Cálculo II", fullName: "Cálculo II",
     code: "MAT1620", color: "#5B8DC4", softColor: "#1A2740",
-    rulesNote: "Promedio ponderado ≥ 4.0",
+    rulesNote: "Promedio ponderado ≥ 4.0 · Laboratorio = (T1+T2+T3)/3, redondeado al primer decimal",
     threshold: 4.0, minEvalRules: [],
     groups: [
-      { label: "Laboratorio", color: "#6FB283", evals: [{ id:"lab", name:"Laboratorio", weight:10 }] },
+      { label: "Laboratorio", color: "#6FB283", evals: [{ id:"lab", name:"Laboratorio", weight:10, computed:true, computedType:"laboratorio" }] },
       { label: "Interrogaciones", color: "#5BABC4", evals: [
         { id:"i1", name:"Interrogación 1", weight:20 },
         { id:"i2", name:"Interrogación 2", weight:20 },
@@ -555,8 +555,21 @@ function getLambdaInfo(courseId) {
   return Math.min(1 + 0.5 * (puntos / (0.83 * maxTeo)), 1.5);
 }
 
+// Laboratorio (Cálculo II): NL = (T1 + T2 + T3) / 3, aproximado al primer decimal
+function computeLaboratorio(courseId) {
+  const g = state.grades[courseId] || {};
+  const t1 = parseFloat(g["lab_t1"]);
+  const t2 = parseFloat(g["lab_t2"]);
+  const t3 = parseFloat(g["lab_t3"]);
+  if (isNaN(t1) || isNaN(t2) || isNaN(t3)) return null;
+  return Math.round(((t1 + t2 + t3) / 3) * 10) / 10;
+}
+
 function getEvalGrade(courseId, ev) {
-  if (ev.computed) return computeParticipacion(courseId);
+  if (ev.computed) {
+    if (ev.computedType === "laboratorio") return computeLaboratorio(courseId);
+    return computeParticipacion(courseId);
+  }
   return parseG((state.grades[courseId] || {})[ev.id]);
 }
 
@@ -726,8 +739,85 @@ function analyzeGrades(courseId) {
   return { state:"analyzed", currentAvg, doneW, pendW, maxFinal, minFinal, uniformNeeded, verdict, verdictDetail, specialChecks, perEvalAnalysis, extras, hardImpossible };
 }
 
+// ─── Computed row (Laboratorio) ────────────────────────────────────────────────
+function renderLaboratorioRow(cid, ev) {
+  const g = state.grades[cid] || {};
+  const t1 = g["lab_t1"] || "";
+  const t2 = g["lab_t2"] || "";
+  const t3 = g["lab_t3"] || "";
+  const computed = computeLaboratorio(cid);
+  const isSet = computed !== null;
+  const bcolor = isSet ? gradeColor(computed) : "#2A3A55";
+  const weightLabel = ev.weightLabel || `${ev.weight.toFixed(1)}% del ramo`;
+  const formulaText = isSet
+    ? `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`
+    : `Completa las 3 tareas · NL = (T1 + T2 + T3) / 3`;
+  const formulaStyle = isSet ? "color:#8997B0;font-style:normal" : "color:#5E6E87;font-style:italic";
+
+  return `
+    <div class="eval-row" data-lab-row="${cid}">
+      <div class="eval-top">
+        <div>
+          <div class="eval-name">${ev.name}</div>
+          <div class="eval-weight">${weightLabel}</div>
+        </div>
+        <div class="eval-right">
+          <div class="grade-tag ${isSet?"set":""}" style="${isSet?`background:${bcolor}`:""}">
+            <span>${isSet ? computed.toFixed(1) : "—"}</span>
+          </div>
+        </div>
+      </div>
+      <div class="part-inputs">
+        <div class="part-input-wrap">
+          <label>Tarea 1</label>
+          <input type="number" class="part-input lab-input" inputmode="decimal" data-course="${cid}" data-field="lab_t1" value="${t1}" step="0.1" min="1" max="7" placeholder="—">
+        </div>
+        <div class="part-input-wrap">
+          <label>Tarea 2</label>
+          <input type="number" class="part-input lab-input" inputmode="decimal" data-course="${cid}" data-field="lab_t2" value="${t2}" step="0.1" min="1" max="7" placeholder="—">
+        </div>
+        <div class="part-input-wrap">
+          <label>Tarea 3</label>
+          <input type="number" class="part-input lab-input" inputmode="decimal" data-course="${cid}" data-field="lab_t3" value="${t3}" step="0.1" min="1" max="7" placeholder="—">
+        </div>
+      </div>
+      <div class="part-lambda" style="${formulaStyle}">${formulaText}</div>
+    </div>`;
+}
+
+function updateLaboratorioRow(courseId) {
+  const row = document.querySelector(`[data-lab-row="${courseId}"]`);
+  if (!row) return;
+  const computed = computeLaboratorio(courseId);
+  const tag = row.querySelector(".grade-tag");
+  const span = tag.querySelector("span");
+  if (computed !== null) {
+    const bcolor = gradeColor(computed);
+    tag.classList.add("set");
+    tag.style.background = bcolor;
+    span.textContent = computed.toFixed(1);
+  } else {
+    tag.classList.remove("set");
+    tag.style.background = "";
+    span.textContent = "—";
+  }
+  const formulaEl = row.querySelector(".part-lambda");
+  if (formulaEl) {
+    if (computed !== null) {
+      formulaEl.textContent = `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`;
+      formulaEl.style.color = "#8997B0";
+      formulaEl.style.fontStyle = "normal";
+    } else {
+      formulaEl.textContent = `Completa las 3 tareas · NL = (T1 + T2 + T3) / 3`;
+      formulaEl.style.color = "#5E6E87";
+      formulaEl.style.fontStyle = "italic";
+    }
+  }
+}
+
 // ─── Computed row (Participación) ──────────────────────────────────────────────
 function renderComputedRow(cid, ev) {
+  if (ev.computedType === "laboratorio") return renderLaboratorioRow(cid, ev);
   const g = state.grades[cid] || {};
   const puntos = g["part_puntos"] || "";
   const maxTeo = g["part_max"] || "";
@@ -1191,6 +1281,23 @@ document.addEventListener("input", e => {
       document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
       document.getElementById("avg-value").style.color = gradeColor(cur.avg);
       document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
+    }
+  } else if (e.target.classList.contains("lab-input")) {
+    const { course, field } = e.target.dataset;
+    state.grades[course][field] = e.target.value;
+    saveState();
+    renderVerdict();
+    updateLaboratorioRow(course);
+
+    const cur = calcCurrent(state.tab);
+    const avgBox = document.getElementById("avg-box");
+    if (cur) {
+      avgBox.style.display = "block";
+      document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
+      document.getElementById("avg-value").style.color = gradeColor(cur.avg);
+      document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
+    } else {
+      avgBox.style.display = "none";
     }
   } else if (e.target.classList.contains("part-input")) {
     const { course, field } = e.target.dataset;
