@@ -18,68 +18,170 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
+  html { --course-color: #E8B547; --course-soft: #142037; }
   body {
-    background: #0E1A2C;
+    background: #0A1220;
     color: #E8EDF5;
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 900px 520px at 15% -8%, var(--course-color) 0%, transparent 55%),
+      radial-gradient(ellipse 700px 500px at 105% 30%, var(--course-color) 0%, transparent 60%);
+    opacity: 0.20; transition: background 0.4s ease;
   }
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-thumb { background: #243B5C; border-radius: 3px; }
 
+  /* ── Sidebar ── */
+  #sidebar-overlay {
+    position: fixed; inset: 0; background: rgba(5,9,16,0.62);
+    backdrop-filter: blur(2px); opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease; z-index: 40;
+  }
+  #sidebar-overlay.show { opacity: 1; pointer-events: auto; }
+  #sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: 292px; max-width: 86vw;
+    background: #0B1525; border-right: 1px solid #1F2D44;
+    transform: translateX(-106%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    z-index: 50; display: flex; flex-direction: column; overflow-y: auto;
+  }
+  #sidebar.open { transform: translateX(0); }
+  .sidebar-head {
+    padding: 20px 18px 14px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #1A2740; flex-shrink: 0;
+  }
+  .sidebar-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; letter-spacing: -0.2px; }
+  .sidebar-close {
+    background: none; border: none; color: #6E7E97; font-size: 22px; line-height: 1;
+    cursor: pointer; padding: 4px 8px; border-radius: 6px;
+  }
+  .sidebar-close:hover { color: #D8DFEC; background: #142037; }
+  .sidebar-hint { padding: 13px 18px 2px; font-size: 11.5px; color: #6E7E97; line-height: 1.5; }
+  .sidebar-body { padding: 6px 10px 28px; flex: 1; }
+  .sidebar-semester { margin-top: 16px; }
+  .sidebar-semester-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 1.6px; font-weight: 700;
+    color: #6E7E97; text-transform: uppercase; padding: 6px 10px 8px;
+  }
+  .badge-current {
+    display: inline-block; font-size: 8.5px; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 700;
+    color: #4ADE80; background: #143020; border: 1px solid #1F4630;
+    border-radius: 999px; padding: 1.5px 6px; margin-left: 4px; vertical-align: middle;
+  }
+  .sidebar-course-row {
+    display: flex; align-items: center; gap: 10px; padding: 10px 10px;
+    border-radius: 10px; cursor: pointer; transition: background 0.15s;
+  }
+  .sidebar-course-row:hover { background: #101B30; }
+  .sidebar-course-row.current { background: #142640; }
+  .sidebar-course-row.inactive { opacity: 0.55; }
+  .sidebar-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .sidebar-course-info { flex: 1; min-width: 0; }
+  .sidebar-course-name { font-size: 13px; color: #D8DFEC; font-weight: 500; line-height: 1.3; }
+  .sidebar-course-code { font-size: 10.5px; color: #5E6E87; margin-top: 1px; letter-spacing: 0.3px; }
+
+  .toggle-switch { position: relative; display: inline-block; width: 38px; height: 22px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .toggle-slider {
+    position: absolute; inset: 0; background: #243B5C; border-radius: 999px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .toggle-slider::before {
+    content: ""; position: absolute; height: 16px; width: 16px; left: 3px; top: 3px;
+    background: #8997B0; border-radius: 50%; transition: transform 0.2s, background 0.2s;
+  }
+  .toggle-switch input:checked + .toggle-slider { background: color-mix(in srgb, var(--sw-color, #4ADE80) 55%, #0B1525); }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: var(--sw-color, #4ADE80); }
+
   /* ── Header ── */
   #header {
     background: #0B1525;
-    padding: 18px 20px 0;
+    padding: 16px 20px 0;
     border-bottom: 1px solid #1A2740;
     position: sticky; top: 0; z-index: 10;
   }
-  #header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  #title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.5px; line-height: 1.1; }
-  #subtitle { font-size: 11px; color: #6E7E97; margin-top: 4px; letter-spacing: 0.5px; }
+  #header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  #hamburger-btn {
+    width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+    background: #142037; border: 1px solid #243B5C; color: #D8DFEC;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-size: 15px; transition: border-color 0.2s;
+  }
+  #hamburger-btn:hover { border-color: var(--course-color); }
+  #title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.5px; line-height: 1.1; }
+  #subtitle { font-size: 11px; color: #6E7E97; margin-top: 3px; letter-spacing: 0.5px; }
   #save-msg {
     font-size: 11px; color: #4ADE80; font-weight: 500;
     padding: 4px 10px; background: #143020; border-radius: 999px;
-    border: 1px solid #1F4630; display: none;
+    border: 1px solid #1F4630; display: none; margin-left: auto; flex-shrink: 0;
   }
-  #tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 12px; }
+  #tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; }
   .tab-btn {
-    padding: 8px 14px; border-radius: 8px;
-    font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500;
-    white-space: nowrap; cursor: pointer;
-    transition: all 0.2s; border: 1px solid #243B5C;
-    background: transparent; color: #8997B0;
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 13px 7px 10px; background: #101B30; border: 1px solid #1F2D44; border-radius: 999px;
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+    white-space: nowrap; cursor: pointer; transition: all 0.2s; color: #8997B0; flex-shrink: 0;
   }
-  .tab-btn:hover { transform: translateY(-1px); }
-  .tab-btn.active { font-weight: 600; }
+  .tab-btn:hover { color: #D8DFEC; border-color: #2A3B58; }
+  .tab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: 0.55; }
+  .tab-btn.active { font-weight: 700; }
+  .tab-btn.active .tab-dot { opacity: 1; }
 
   /* ── Main content ── */
-  #main { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; }
+  #main { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; position: relative; z-index: 1; }
 
   /* ── Course hero ── */
   #course-hero {
-    border-radius: 14px; padding: 18px 20px; margin-bottom: 18px;
+    position: relative; overflow: hidden;
+    border-radius: 18px; padding: 22px 22px 22px 26px; margin-bottom: 18px;
     display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 10px 28px -12px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
   }
-  #course-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.3px; line-height: 1.15; }
-  #course-code { font-size: 11px; font-weight: 600; margin-top: 4px; letter-spacing: 1.2px; }
-  #avg-box { text-align: right; padding-left: 16px; flex-shrink: 0; }
-  #avg-label { font-size: 9.5px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 2px; }
-  #avg-value { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.5px; }
-  #avg-pct { font-size: 10px; color: #6E7E97; margin-top: 4px; }
+  #course-hero::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    background: var(--course-color);
+  }
+  #course-hero::after {
+    content: ""; position: absolute; right: -36px; top: -44px; width: 150px; height: 150px;
+    border-radius: 50%; background: var(--course-color); opacity: 0.16; filter: blur(6px);
+  }
+  #semester-tag {
+    display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--course-color); margin-bottom: 5px;
+  }
+  #course-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.3px; line-height: 1.15; position: relative; }
+  #course-code { font-size: 11px; font-weight: 600; margin-top: 4px; letter-spacing: 1.2px; position: relative; }
+  #avg-box {
+    flex-shrink: 0; position: relative; width: 74px; height: 74px;
+    display: none; align-items: center; justify-content: center;
+  }
+  #avg-ring { position: absolute; inset: 0; transform: rotate(-90deg); }
+  #avg-ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 6; }
+  #avg-ring-fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease, stroke 0.3s; }
+  #avg-ring-label { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  #avg-value { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; }
+  #avg-pct { font-size: 8px; color: #6E7E97; margin-top: 3px; letter-spacing: 0.3px; }
 
   /* ── Rules note ── */
   #rules-note {
-    background: #142037; border: 1px solid #1F2D44;
-    border-radius: 10px; padding: 11px 14px; margin-bottom: 22px;
+    background: #142037; border: 1px solid #1F2D44; border-left: 3px solid var(--course-color);
+    border-radius: 8px; padding: 11px 14px; margin-bottom: 22px;
     font-size: 12px; color: #8997B0; line-height: 1.6;
   }
 
   /* ── Eval groups ── */
-  .group-wrap { margin-bottom: 18px; }
-  .group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 0 4px; }
-  .group-bar { width: 3px; height: 13px; border-radius: 2px; flex-shrink: 0; }
-  .group-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .group-wrap { margin-bottom: 20px; }
+  .group-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 0 2px; }
+  .group-label {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, var(--pill-color, #5BABC4) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--pill-color, #5BABC4) 35%, transparent);
+  }
   .surprise-controls { margin-left: auto; display: flex; align-items: center; gap: 5px; }
   .surprise-label { font-size: 11px; color: #6E7E97; margin-right: 2px; }
   .sn-btn {
@@ -91,7 +193,10 @@
   .sn-btn:hover { transform: scale(1.08); }
   .sn-btn.active { color: #0E1A2C; }
 
-  .group-card { background: #142037; border: 1px solid #1F2D44; border-radius: 12px; overflow: hidden; }
+  .group-card {
+    background: #131E33; border: 1px solid #1F2D44; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 6px 18px -10px rgba(0,0,0,0.5);
+  }
 
   /* ── Eval row ── */
   .eval-row { padding: 16px 18px; border-bottom: 1px solid #1F2D44; }
@@ -190,7 +295,7 @@
   .progress-pct { font-size: 10px; color: #5E6E87; letter-spacing: 1px; min-width: 28px; text-align: right; }
 
   /* ── Verdict card ── */
-  #verdict-card { margin-top: 18px; background: #142037; border: 1px solid #1F2D44; border-radius: 14px; overflow: hidden; }
+  #verdict-card { margin-top: 18px; background: #131E33; border: 1px solid #1F2D44; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.55); }
   #verdict-header { padding: 16px 20px; border-bottom: 1px solid #1F2D44; }
   #verdict-meta { font-size: 10px; color: #8997B0; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px; }
   #verdict-label { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; line-height: 1.1; letter-spacing: -0.3px; }
@@ -253,7 +358,7 @@
   }
   .scenario-btn:hover { transform: translateY(-1px); }
   .scenario-btn.active {
-    background: #FACC15; border-color: #FACC15; color: #0E1A2C;
+    background: var(--course-color); border-color: var(--course-color); color: #0E1A2C;
   }
   .scenario-result {
     padding: 12px 14px; border-radius: 8px;
@@ -262,7 +367,7 @@
   }
   .scenario-result b {
     font-family: 'Fraunces', serif; font-weight: 600;
-    color: #FACC15;
+    color: var(--course-color);
   }
   .scenario-result.impossible b { color: #F87171; }
   .scenario-result.easy b { color: #4ADE80; }
@@ -272,11 +377,13 @@
   .min-avg-extra-item:last-child { margin-bottom: 0; }
   .min-avg-extra-bullet { color: #FACC15; font-weight: 700; flex-shrink: 0; }
 
-  #stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid #1F2D44; }
-  .stat-cell { padding: 14px 12px; text-align: center; }
-  .stat-cell + .stat-cell { border-left: 1px solid #1F2D44; }
-  .stat-label { font-size: 9.5px; color: #6E7E97; letter-spacing: 1.2px; font-weight: 600; margin-bottom: 4px; }
-  .stat-value { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; }
+  #stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 14px; border-bottom: 1px solid #1F2D44; }
+  .stat-cell {
+    padding: 12px 8px; text-align: center; border-radius: 12px;
+    background: #0F1B30; border: 1px solid #1F2D44;
+  }
+  .stat-label { font-size: 9px; color: #6E7E97; letter-spacing: 1.1px; font-weight: 600; margin-bottom: 5px; }
+  .stat-value { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; }
 
   #special-checks { padding: 14px 20px; border-bottom: 1px solid #1F2D44; }
   .checks-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
@@ -305,15 +412,28 @@
     min-width: 56px; text-align: center;
   }
 
+  #verdict-course-bar { height: 4px; background: var(--course-color); }
+
   /* ── Footer ── */
   #footer { margin-top: 36px; text-align: center; font-size: 11px; color: #4D5C75; line-height: 1.6; letter-spacing: 0.3px; }
 </style>
 </head>
 <body>
 
+<div id="sidebar-overlay"></div>
+<div id="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-title">Mis Ramos</div>
+    <button class="sidebar-close" aria-label="Cerrar menú">×</button>
+  </div>
+  <div class="sidebar-hint">Elige qué ramos quieres ver en tu calculadora.</div>
+  <div class="sidebar-body" id="sidebar-body"></div>
+</div>
+
 <div id="header">
   <div id="header-top">
-    <div>
+    <button id="hamburger-btn" aria-label="Abrir menú de ramos">☰</button>
+    <div style="flex:1;min-width:0">
       <div id="title">Calculadora de Notas</div>
       <div id="subtitle">Ing. Comercial UC</div>
     </div>
@@ -325,18 +445,25 @@
 <div id="main">
   <div id="course-hero">
     <div style="flex:1;min-width:0">
+      <div id="semester-tag"></div>
       <div id="course-name"></div>
       <div id="course-code"></div>
     </div>
     <div id="avg-box" style="display:none">
-      <div id="avg-label">PROMEDIO</div>
-      <div id="avg-value"></div>
-      <div id="avg-pct"></div>
+      <svg id="avg-ring" width="74" height="74" viewBox="0 0 74 74">
+        <circle id="avg-ring-bg" cx="37" cy="37" r="31"></circle>
+        <circle id="avg-ring-fg" cx="37" cy="37" r="31"></circle>
+      </svg>
+      <div id="avg-ring-label">
+        <div id="avg-value"></div>
+        <div id="avg-pct"></div>
+      </div>
     </div>
   </div>
   <div id="rules-note"></div>
   <div id="groups-container"></div>
   <div id="verdict-card">
+    <div id="verdict-course-bar"></div>
     <div id="verdict-header">
       <div id="verdict-meta">VEREDICTO</div>
       <div id="verdict-label"></div>
@@ -403,7 +530,7 @@
 const COURSES = {
   algebra: {
     name: "Álgebra Lineal", fullName: "Introducción al Álgebra Lineal",
-    code: "MAT1279", color: "#6FB283", softColor: "#1F302A",
+    code: "MAT1279", color: "#6FB283", softColor: "#1F302A", semester: 2, currentlyTaking: true,
     rulesNote: "Nota final ≥ 4.0 (notas redondeadas a 1 decimal)",
     threshold: 4.0, minEvalRules: [],
     groups: [
@@ -417,7 +544,7 @@ const COURSES = {
   },
   calculo: {
     name: "Cálculo II", fullName: "Cálculo II",
-    code: "MAT1620", color: "#5B8DC4", softColor: "#1A2740",
+    code: "MAT1620", color: "#1565F5", softColor: "#0F1F42", semester: 2, currentlyTaking: true,
     rulesNote: "Promedio ponderado ≥ 4.0 · Laboratorio = (T1+T2+T3)/3, redondeado al primer decimal",
     threshold: 4.0, minEvalRules: [],
     groups: [
@@ -432,7 +559,7 @@ const COURSES = {
   },
   contabilidad: {
     name: "Contabilidad", fullName: "Contabilidad",
-    code: "EAA1210", color: "#E8975B", softColor: "#3A2A1F",
+    code: "EAA1210", color: "#E8975B", softColor: "#3A2A1F", semester: 1, currentlyTaking: true,
     rulesNote: "Nota final ≥ 3.95 · Examen Final ≥ 3.0 · Controles sorpresa ajustables",
     threshold: 3.95,
     minEvalRules: [{ id:"e", min:3.0, label:"Examen Final" }],
@@ -452,7 +579,7 @@ const COURSES = {
   },
   micro: {
     name: "Microeconomía", fullName: "Introducción a la Microeconomía",
-    code: "EAE1110", color: "#D86F6F", softColor: "#3A1F1F",
+    code: "EAE1110", color: "#D86F6F", softColor: "#3A1F1F", semester: 1, currentlyTaking: true,
     rulesNote: "N > 3.95 (estricto) · Examen ≥ 3.0 · Promedio sin Trabajo Grupal > 3.95 · Participación = λ × promedio C1/C2",
     threshold: 3.95, strictThreshold: true,
     minEvalRules: [{ id:"e", min:3.0, label:"Examen", cappedFinalAt:3.9 }],
@@ -473,7 +600,7 @@ const COURSES = {
   },
   filosofia: {
     name: "Filosofía", fullName: "Filosofía: ¿Para qué?",
-    code: "FIL2001", color: "#E8C548", softColor: "#332C1A",
+    code: "FIL2001", color: "#E8C548", softColor: "#332C1A", semester: 2, currentlyTaking: true,
     rulesNote: "Promedio ponderado ≥ 3.0 · Podcast ≥ 4.0",
     threshold: 3.0,
     minEvalRules: [{ id:"pod", min:4.0, label:"Podcast" }],
@@ -488,7 +615,7 @@ const COURSES = {
   },
   probabilidad: {
     name: "Probabilidad", fullName: "Probabilidad y Estadística",
-    code: "EAA1510", color: "#5BC4DC", softColor: "#1F3238",
+    code: "EAA1510", color: "#5BC4DC", softColor: "#1F3238", semester: 2, currentlyTaking: true,
     rulesNote: "Nota final ≥ 3.95 · Examen ≥ 2.5 · Control sorpresa ajustable",
     threshold: 3.95,
     minEvalRules: [{ id:"e", min:2.5, label:"Examen" }],
@@ -506,8 +633,39 @@ const COURSES = {
       ]},
       { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:25 }] },
     ]
+  },
+  calculo1: {
+    name: "Cálculo I", fullName: "Cálculo I",
+    code: "MAT1610", color: "#2E8CFF", softColor: "#122549", semester: 1,
+    provisional: true,
+    rulesNote: "⚠ Ramo agregado desde tu historial — reglas provisionales (promedio ponderado ≥ 4.0). Cuéntame la ponderación real de tus interrogaciones y examen para dejarlas exactas.",
+    threshold: 4.0, minEvalRules: [],
+    groups: [
+      { label: "Interrogaciones", color: "#5BABC4", evals: [
+        { id:"i1", name:"Interrogación 1", weight:20 },
+        { id:"i2", name:"Interrogación 2", weight:25 },
+        { id:"i3", name:"Interrogación 3", weight:25 }
+      ]},
+      { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
+    ]
+  },
+  comportamiento: {
+    name: "Comport. Organizacional", fullName: "Comportamiento Organizacional",
+    code: "EAA1110", color: "#2C4A75", softColor: "#141F33", semester: 1,
+    provisional: true,
+    rulesNote: "⚠ Ramo agregado desde tu historial — reglas provisionales (promedio ponderado ≥ 4.0). Cuéntame la ponderación real de pruebas y trabajos para dejarlas exactas.",
+    threshold: 4.0, minEvalRules: [],
+    groups: [
+      { label: "Pruebas", color: "#5BABC4", evals: [
+        { id:"p1", name:"Prueba 1", weight:35 },
+        { id:"p2", name:"Prueba 2", weight:35 }
+      ]},
+      { label: "Trabajos y talleres", color: "#A287C7", evals: [{ id:"tw", name:"Trabajo/Taller", weight:30 }] },
+    ]
   }
 };
+
+const SEMESTER_LABELS = { 1: "Primer Semestre", 2: "Segundo Semestre" };
 
 const VERDICTS = {
   EMPTY:    { color:"#6E7E97", bg:"#142037",  label:"Sin notas aún" },
@@ -522,9 +680,11 @@ const VERDICTS = {
 // ─── State ────────────────────────────────────────────────────────────────────
 let state = {
   tab: "algebra",
-  grades: { algebra:{}, calculo:{}, contabilidad:{}, micro:{}, filosofia:{}, probabilidad:{} },
+  grades: { algebra:{}, calculo:{}, contabilidad:{}, micro:{}, filosofia:{}, probabilidad:{}, calculo1:{}, comportamiento:{} },
   surpriseCount: { contabilidad: 3, probabilidad: 3 },
   scenarioPick: 5.0,
+  // Ramos visibles en la calculadora. Por defecto: solo los del semestre en curso.
+  activeCourses: Object.keys(COURSES).filter(id => COURSES[id].currentlyTaking),
 };
 
 function loadState() {
@@ -532,6 +692,15 @@ function loadState() {
     const s = localStorage.getItem("notas_uc_2026");
     if (s) { const d = JSON.parse(s); if (d.grades) Object.assign(state, d); }
   } catch(_) {}
+  // Migración / robustez: asegura que existan todas las llaves para ramos nuevos,
+  // incluso si el localStorage guardado es de una versión anterior de la calculadora.
+  Object.keys(COURSES).forEach(id => { if (!state.grades[id]) state.grades[id] = {}; });
+  if (!state.activeCourses) {
+    state.activeCourses = Object.keys(COURSES).filter(id => COURSES[id].currentlyTaking);
+  }
+  if (!COURSES[state.tab] || !state.activeCourses.includes(state.tab)) {
+    state.tab = state.activeCourses[0] || Object.keys(COURSES)[0];
+  }
 }
 
 function saveState() {
@@ -556,8 +725,105 @@ function gradeColor(g) {
   return "#F87171";
 }
 
+// Anillo circular del promedio actual en el hero (usado en cada punto donde cambia una nota)
+const AVG_RING_C = 2 * Math.PI * 31;
+function updateAvgDisplay(cur) {
+  const avgBox = document.getElementById("avg-box");
+  if (!cur) { avgBox.style.display = "none"; return; }
+  avgBox.style.display = "flex";
+  const color = gradeColor(cur.avg);
+  document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
+  document.getElementById("avg-value").style.color = color;
+  document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}%`;
+  const frac = Math.min(1, Math.max(0, (cur.avg - 1) / 6));
+  const fg = document.getElementById("avg-ring-fg");
+  fg.style.strokeDasharray = `${AVG_RING_C}`;
+  fg.style.strokeDashoffset = `${AVG_RING_C * (1 - frac)}`;
+  fg.style.stroke = color;
+}
+
 function getSurpriseCount(courseId) {
   return (state.surpriseCount && state.surpriseCount[courseId]) || 3;
+}
+
+// ─── Selección de ramos (sidebar) ──────────────────────────────────────────────
+function isCourseActive(id) {
+  return (state.activeCourses || []).includes(id);
+}
+
+function getActiveCourseIds() {
+  return Object.keys(COURSES).filter(isCourseActive);
+}
+
+// Activa/desactiva un ramo desde el switch del sidebar. Siempre deja al menos uno activo.
+function toggleCourseActive(id) {
+  if (!state.activeCourses) state.activeCourses = [];
+  const idx = state.activeCourses.indexOf(id);
+  if (idx >= 0) {
+    if (state.activeCourses.length === 1) { renderSidebar(); return; } // no dejar la calculadora vacía
+    state.activeCourses.splice(idx, 1);
+    if (state.tab === id) state.tab = getActiveCourseIds()[0];
+  } else {
+    state.activeCourses.push(id);
+  }
+  saveState();
+  render();
+}
+
+// Click en una fila del sidebar: activa el ramo si hace falta y lo muestra.
+function selectCourseFromSidebar(id) {
+  if (!isCourseActive(id)) {
+    if (!state.activeCourses) state.activeCourses = [];
+    state.activeCourses.push(id);
+  }
+  state.tab = id;
+  saveState();
+  render();
+  closeSidebar();
+}
+
+function openSidebar() {
+  document.getElementById("sidebar").classList.add("open");
+  document.getElementById("sidebar-overlay").classList.add("show");
+}
+function closeSidebar() {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebar-overlay").classList.remove("show");
+}
+
+function renderSidebar() {
+  const bySemester = {};
+  Object.entries(COURSES).forEach(([id, c]) => {
+    (bySemester[c.semester] = bySemester[c.semester] || []).push([id, c]);
+  });
+
+  const semesterBlock = (num) => {
+    const courses = bySemester[num];
+    if (!courses || !courses.length) return "";
+    const rows = courses.map(([id, c]) => {
+      const active = isCourseActive(id);
+      const isCurrent = active && state.tab === id;
+      return `
+        <div class="sidebar-course-row ${isCurrent?"current":""} ${active?"":"inactive"}" data-course-id="${id}">
+          <span class="sidebar-dot" style="background:${c.color}"></span>
+          <div class="sidebar-course-info">
+            <div class="sidebar-course-name">${c.name} ${c.currentlyTaking ? '<span class="badge-current">cursando</span>' : ""}</div>
+            <div class="sidebar-course-code">${c.code}</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" data-course-toggle="${id}" ${active?"checked":""}>
+            <span class="toggle-slider" style="--sw-color:${c.color}"></span>
+          </label>
+        </div>`;
+    }).join("");
+    return `
+      <div class="sidebar-semester">
+        <div class="sidebar-semester-title">${SEMESTER_LABELS[num]}</div>
+        ${rows}
+      </div>`;
+  };
+
+  document.getElementById("sidebar-body").innerHTML = semesterBlock(1) + semesterBlock(2);
 }
 
 // Participación (Micro): λ = min(1 + 0.5 · puntos/(0.83 · máximo teórico), 1.5)
@@ -582,14 +848,33 @@ function getLambdaInfo(courseId) {
   return Math.min(1 + 0.5 * (puntos / (0.83 * maxTeo)), 1.5);
 }
 
-// Laboratorio (Cálculo II): NL = (T1 + T2 + T3) / 3, aproximado al primer decimal
+// Laboratorio (Cálculo II): NL = (T1 + T2 + T3) / 3, aproximado al primer decimal.
+// Mientras falten tareas, se muestra un promedio provisional con las que ya están.
 function computeLaboratorio(courseId) {
   const g = state.grades[courseId] || {};
-  const t1 = parseFloat(g["lab_t1"]);
-  const t2 = parseFloat(g["lab_t2"]);
-  const t3 = parseFloat(g["lab_t3"]);
-  if (isNaN(t1) || isNaN(t2) || isNaN(t3)) return null;
-  return Math.round(((t1 + t2 + t3) / 3) * 10) / 10;
+  const vals = ["lab_t1", "lab_t2", "lab_t3"]
+    .map(f => parseFloat(g[f]))
+    .filter(v => !isNaN(v));
+  if (vals.length === 0) return null;
+  const raw = vals.reduce((a, b) => a + b, 0) / vals.length;
+  return Math.round(raw * 10) / 10;
+}
+
+function countLabTasksDone(courseId) {
+  const g = state.grades[courseId] || {};
+  return ["lab_t1", "lab_t2", "lab_t3"].filter(f => g[f] !== undefined && g[f] !== "").length;
+}
+
+function labFormulaText(courseId) {
+  const computed = computeLaboratorio(courseId);
+  const filled = countLabTasksDone(courseId);
+  if (computed === null) {
+    return { text: "Completa al menos una tarea · NL = (T1 + T2 + T3) / 3", style: "color:#5E6E87;font-style:italic" };
+  }
+  if (filled < 3) {
+    return { text: `Provisional con ${filled}/3 tareas · NL = ${computed.toFixed(1)}`, style: "color:#8997B0;font-style:italic" };
+  }
+  return { text: `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`, style: "color:#8997B0;font-style:normal" };
 }
 
 function getEvalGrade(courseId, ev) {
@@ -802,10 +1087,7 @@ function renderLaboratorioRow(cid, ev) {
   const isSet = computed !== null;
   const bcolor = isSet ? gradeColor(computed) : "#2A3A55";
   const weightLabel = ev.weightLabel || `${ev.weight.toFixed(1)}% del ramo`;
-  const formulaText = isSet
-    ? `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`
-    : `Completa las 3 tareas · NL = (T1 + T2 + T3) / 3`;
-  const formulaStyle = isSet ? "color:#8997B0;font-style:normal" : "color:#5E6E87;font-style:italic";
+  const formula = labFormulaText(cid);
 
   const taskRows = [
     ["lab_t1", "Tarea 1"],
@@ -827,7 +1109,7 @@ function renderLaboratorioRow(cid, ev) {
         </div>
       </div>
       <div class="lab-tasks">${taskRows}</div>
-      <div class="part-lambda" style="${formulaStyle}">${formulaText}</div>
+      <div class="part-lambda" style="${formula.style}">${formula.text}</div>
     </div>`;
 }
 
@@ -849,15 +1131,9 @@ function updateLaboratorioRow(courseId) {
   }
   const formulaEl = row.querySelector(".part-lambda");
   if (formulaEl) {
-    if (computed !== null) {
-      formulaEl.textContent = `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`;
-      formulaEl.style.color = "#8997B0";
-      formulaEl.style.fontStyle = "normal";
-    } else {
-      formulaEl.textContent = `Completa las 3 tareas · NL = (T1 + T2 + T3) / 3`;
-      formulaEl.style.color = "#5E6E87";
-      formulaEl.style.fontStyle = "italic";
-    }
+    const formula = labFormulaText(courseId);
+    formulaEl.textContent = formula.text;
+    formulaEl.style.cssText = formula.style;
   }
 }
 
@@ -937,31 +1213,41 @@ function updateParticipacionRow(courseId) {
 
 // ─── Render ───────────────────────────────────────────────────────────────────
 function render() {
+  // Seguridad: si el ramo actual quedó desactivado o no existe, cae al primero activo.
+  if (!COURSES[state.tab] || !isCourseActive(state.tab)) {
+    state.tab = getActiveCourseIds()[0] || Object.keys(COURSES)[0];
+  }
   const cid = state.tab;
   const course = COURSES[cid];
 
-  // Tabs
-  document.getElementById("tabs").innerHTML = Object.entries(COURSES).map(([id,c]) => `
+  // Tema de color del ramo actual, usado en todo el layout (hero, borde, reglas, veredicto...)
+  document.documentElement.style.setProperty("--course-color", course.color);
+  document.documentElement.style.setProperty("--course-soft", course.softColor);
+
+  renderSidebar();
+
+  // Tabs (solo ramos activos)
+  document.getElementById("tabs").innerHTML = getActiveCourseIds().map(id => {
+    const c = COURSES[id];
+    return `
     <button class="tab-btn ${id===cid?"active":""}" data-tab="${id}"
-      style="${id===cid ? `border-color:${c.color};background:${c.softColor};color:${c.color}` : ""}">
+      style="${id===cid ? `color:${c.color};background:${c.color}1A;border-color:${c.color}55` : ""}">
+      <span class="tab-dot" style="background:${c.color};color:${c.color}"></span>
       ${c.name}
-    </button>`).join("");
+    </button>`;
+  }).join("");
 
   // Hero
   document.getElementById("course-hero").style.background = course.softColor;
   document.getElementById("course-hero").style.border = `1px solid ${course.color}33`;
+  document.getElementById("semester-tag").textContent =
+    SEMESTER_LABELS[course.semester] + (course.currentlyTaking ? " · cursando ahora" : course.provisional ? " · provisional" : "");
   document.getElementById("course-name").textContent = course.fullName;
   document.getElementById("course-code").textContent = course.code;
   document.getElementById("course-code").style.color = course.color;
 
   const cur = calcCurrent(cid);
-  const avgBox = document.getElementById("avg-box");
-  if (cur) {
-    avgBox.style.display = "block";
-    document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
-    document.getElementById("avg-value").style.color = gradeColor(cur.avg);
-    document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
-  } else { avgBox.style.display = "none"; }
+  updateAvgDisplay(cur);
 
   document.getElementById("rules-note").textContent = course.rulesNote;
 
@@ -1022,8 +1308,7 @@ function render() {
     return `
       <div class="group-wrap">
         <div class="group-header">
-          <div class="group-bar" style="background:${group.color}"></div>
-          <span class="group-label" style="color:${group.color}">${group.label}${group.dynamic ? ` · promedio, ${group.totalWeight}%` : ""}</span>
+          <span class="group-label" style="color:${group.color};--pill-color:${group.color}">${group.label}${group.dynamic ? ` · promedio, ${group.totalWeight}%` : ""}</span>
           ${surpriseControls}
         </div>
         <div class="group-card">${rows}</div>
@@ -1260,6 +1545,18 @@ function renderScenarios(a, courseId) {
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 document.addEventListener("click", e => {
+  // Sidebar open/close
+  if (e.target.closest("#hamburger-btn")) { openSidebar(); return; }
+  if (e.target.closest("#sidebar-overlay")) { closeSidebar(); return; }
+  if (e.target.closest(".sidebar-close")) { closeSidebar(); return; }
+
+  // El switch de un ramo se maneja aparte (evento "change"); no tratarlo como navegación
+  if (e.target.closest(".toggle-switch")) { return; }
+
+  // Fila del sidebar: selecciona (y activa si hacía falta) ese ramo
+  const sidebarRow = e.target.closest(".sidebar-course-row");
+  if (sidebarRow) { selectCourseFromSidebar(sidebarRow.dataset.courseId); return; }
+
   // Tab switch
   const tab = e.target.closest("[data-tab]");
   if (tab) { state.tab = tab.dataset.tab; render(); return; }
@@ -1320,14 +1617,7 @@ document.addEventListener("input", e => {
     updateParticipacionRow(course);
 
     // Update hero avg
-    const cur = calcCurrent(state.tab);
-    const avgBox = document.getElementById("avg-box");
-    if (cur) {
-      avgBox.style.display = "block";
-      document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
-      document.getElementById("avg-value").style.color = gradeColor(cur.avg);
-      document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
-    }
+    updateAvgDisplay(calcCurrent(state.tab));
   } else if (e.target.classList.contains("lab-task-slider")) {
     const { course, id } = e.target.dataset;
     state.grades[course][id] = e.target.value;
@@ -1360,33 +1650,20 @@ document.addEventListener("input", e => {
 
     // Refresh the computed Laboratorio (NL) summary tag
     updateLaboratorioRow(course);
-
-    const cur = calcCurrent(state.tab);
-    const avgBox = document.getElementById("avg-box");
-    if (cur) {
-      avgBox.style.display = "block";
-      document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
-      document.getElementById("avg-value").style.color = gradeColor(cur.avg);
-      document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
-    }
+    updateAvgDisplay(calcCurrent(state.tab));
   } else if (e.target.classList.contains("part-input")) {
     const { course, field } = e.target.dataset;
     state.grades[course][field] = e.target.value;
     saveState();
     renderVerdict();
     updateParticipacionRow(course);
-
-    const cur = calcCurrent(state.tab);
-    const avgBox = document.getElementById("avg-box");
-    if (cur) {
-      avgBox.style.display = "block";
-      document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
-      document.getElementById("avg-value").style.color = gradeColor(cur.avg);
-      document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}% evaluado`;
-    } else {
-      avgBox.style.display = "none";
-    }
+    updateAvgDisplay(calcCurrent(state.tab));
   }
+});
+
+document.addEventListener("change", e => {
+  const t = e.target.closest("[data-course-toggle]");
+  if (t) { toggleCourseActive(t.dataset.courseToggle); }
 });
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
