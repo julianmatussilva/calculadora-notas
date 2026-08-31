@@ -8,385 +8,367 @@
 <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
-<meta name="theme-color" content="#0E1A2C">
+<meta name="theme-color" content="#1B1B1B">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Notas UC">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
-  html { --course-color: #E8B547; --course-soft: #142037; }
+  html { --course-color: #C9A45C; --course-soft: #2A2A2A; }
   body {
-    background: #0A1220;
-    color: #E8EDF5;
+    background: #1B1B1B;
+    color: #EDEDED;
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     position: relative;
   }
-  body::before {
-    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 900px 520px at 15% -8%, var(--course-color) 0%, transparent 55%),
-      radial-gradient(ellipse 700px 500px at 105% 30%, var(--course-color) 0%, transparent 60%);
-    opacity: 0.20; transition: background 0.4s ease;
-  }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-thumb { background: #243B5C; border-radius: 3px; }
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
 
   /* ── Sidebar ── */
   #sidebar-overlay {
-    position: fixed; inset: 0; background: rgba(5,9,16,0.62);
-    backdrop-filter: blur(2px); opacity: 0; pointer-events: none;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(2px);
+    opacity: 0; pointer-events: none;
     transition: opacity 0.25s ease; z-index: 40;
   }
   #sidebar-overlay.show { opacity: 1; pointer-events: auto; }
   #sidebar {
     position: fixed; top: 0; left: 0; bottom: 0; width: 292px; max-width: 86vw;
-    background: #0B1525; border-right: 1px solid #1F2D44;
-    transform: translateX(-106%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    background: #212121; border-right: 1px solid #333;
+    transform: translateX(-104%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);
     z-index: 50; display: flex; flex-direction: column; overflow-y: auto;
+    box-shadow: 8px 0 24px rgba(0,0,0,0.35);
   }
   #sidebar.open { transform: translateX(0); }
   .sidebar-head {
     padding: 20px 18px 14px; display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid #1A2740; flex-shrink: 0;
+    border-bottom: 1px solid #333; flex-shrink: 0;
   }
-  .sidebar-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; letter-spacing: -0.2px; }
+  .sidebar-title { font-family: 'Source Serif 4', serif; font-size: 18px; font-weight: 600; letter-spacing: -0.1px; }
   .sidebar-close {
-    background: none; border: none; color: #6E7E97; font-size: 22px; line-height: 1;
+    background: none; border: none; color: #999; font-size: 20px; line-height: 1;
     cursor: pointer; padding: 4px 8px; border-radius: 6px;
   }
-  .sidebar-close:hover { color: #D8DFEC; background: #142037; }
-  .sidebar-hint { padding: 13px 18px 2px; font-size: 11.5px; color: #6E7E97; line-height: 1.5; }
+  .sidebar-close:hover { color: #EDEDED; background: #2A2A2A; }
+  .sidebar-hint { padding: 13px 18px 2px; font-size: 11.5px; color: #999; line-height: 1.5; }
   .sidebar-body { padding: 6px 10px 28px; flex: 1; }
   .sidebar-semester { margin-top: 16px; }
   .sidebar-semester-title {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 10px; letter-spacing: 1.6px; font-weight: 700;
-    color: #6E7E97; text-transform: uppercase; padding: 6px 10px 8px;
+    font-size: 10px; letter-spacing: 1.4px; font-weight: 600;
+    color: #888; text-transform: uppercase; padding: 6px 10px 8px;
   }
   .badge-current {
     display: inline-block; font-size: 8.5px; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 700;
-    color: #4ADE80; background: #143020; border: 1px solid #1F4630;
+    color: #A9CBA9; background: #223022; border: 1px solid #35452F;
     border-radius: 999px; padding: 1.5px 6px; margin-left: 4px; vertical-align: middle;
   }
   .sidebar-course-row {
     display: flex; align-items: center; gap: 10px; padding: 10px 10px;
     border-radius: 10px; cursor: pointer; transition: background 0.15s;
   }
-  .sidebar-course-row:hover { background: #101B30; }
-  .sidebar-course-row.current { background: #142640; }
-  .sidebar-course-row.inactive { opacity: 0.55; }
+  .sidebar-course-row:hover { background: #262626; }
+  .sidebar-course-row.current { background: #2A2A2A; }
+  .sidebar-course-row.inactive { opacity: 0.5; }
   .sidebar-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   .sidebar-course-info { flex: 1; min-width: 0; }
-  .sidebar-course-name { font-size: 13px; color: #D8DFEC; font-weight: 500; line-height: 1.3; }
-  .sidebar-course-code { font-size: 10.5px; color: #5E6E87; margin-top: 1px; letter-spacing: 0.3px; }
+  .sidebar-course-name { font-size: 13px; color: #E4E4E4; font-weight: 500; line-height: 1.3; }
+  .sidebar-course-code { font-size: 10.5px; color: #7A7A7A; margin-top: 1px; letter-spacing: 0.3px; }
 
   .toggle-switch { position: relative; display: inline-block; width: 38px; height: 22px; flex-shrink: 0; }
   .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
   .toggle-slider {
-    position: absolute; inset: 0; background: #243B5C; border-radius: 999px;
+    position: absolute; inset: 0; background: #3A3A3A; border-radius: 999px;
     cursor: pointer; transition: background 0.2s;
   }
   .toggle-slider::before {
     content: ""; position: absolute; height: 16px; width: 16px; left: 3px; top: 3px;
-    background: #8997B0; border-radius: 50%; transition: transform 0.2s, background 0.2s;
+    background: #B8B8B8; border-radius: 50%; transition: transform 0.2s, background 0.2s;
   }
-  .toggle-switch input:checked + .toggle-slider { background: color-mix(in srgb, var(--sw-color, #4ADE80) 55%, #0B1525); }
-  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: var(--sw-color, #4ADE80); }
+  .toggle-switch input:checked + .toggle-slider { background: color-mix(in srgb, var(--sw-color, #A9CBA9) 45%, #2A2A2A); }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: var(--sw-color, #A9CBA9); }
 
   /* ── Header ── */
   #header {
-    background: #0B1525;
+    background: #1B1B1B;
     padding: 16px 20px 0;
-    border-bottom: 1px solid #1A2740;
+    border-bottom: 1px solid #2E2E2E;
     position: sticky; top: 0; z-index: 10;
   }
   #header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   #hamburger-btn {
-    width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
-    background: #142037; border: 1px solid #243B5C; color: #D8DFEC;
+    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+    background: #242424; border: 1px solid #363636; color: #E4E4E4;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
     font-size: 15px; transition: border-color 0.2s;
   }
   #hamburger-btn:hover { border-color: var(--course-color); }
-  #title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.5px; line-height: 1.1; }
-  #subtitle { font-size: 11px; color: #6E7E97; margin-top: 3px; letter-spacing: 0.5px; }
+  #title { font-family: 'Source Serif 4', serif; font-size: 21px; font-weight: 600; color: #EDEDED; letter-spacing: -0.3px; line-height: 1.1; }
+  #subtitle { font-size: 11px; color: #888; margin-top: 3px; letter-spacing: 0.4px; }
   #save-msg {
-    font-size: 11px; color: #4ADE80; font-weight: 500;
-    padding: 4px 10px; background: #143020; border-radius: 999px;
-    border: 1px solid #1F4630; display: none; margin-left: auto; flex-shrink: 0;
+    font-size: 11px; color: #A9CBA9; font-weight: 500;
+    padding: 4px 10px; background: #223022; border-radius: 999px;
+    border: 1px solid #35452F; display: none; margin-left: auto; flex-shrink: 0;
   }
   #tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; }
   .tab-btn {
     display: flex; align-items: center; gap: 6px;
-    padding: 7px 13px 7px 10px; background: #101B30; border: 1px solid #1F2D44; border-radius: 999px;
+    padding: 7px 13px 7px 10px; background: #242424; border: 1px solid #333; border-radius: 999px;
     font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
-    white-space: nowrap; cursor: pointer; transition: all 0.2s; color: #8997B0; flex-shrink: 0;
+    white-space: nowrap; cursor: pointer; transition: all 0.15s; color: #9A9A9A; flex-shrink: 0;
   }
-  .tab-btn:hover { color: #D8DFEC; border-color: #2A3B58; }
-  .tab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: 0.55; }
-  .tab-btn.active { font-weight: 700; }
+  .tab-btn:hover { color: #E4E4E4; border-color: #444; }
+  .tab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: 0.6; }
+  .tab-btn.active { font-weight: 600; }
   .tab-btn.active .tab-dot { opacity: 1; }
 
   /* ── Main content ── */
   #main { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; position: relative; z-index: 1; }
 
-  /* ── Course hero ── */
-  #course-hero {
-    position: relative; overflow: hidden;
-    border-radius: 18px; padding: 22px 22px 22px 26px; margin-bottom: 18px;
-    display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 10px 28px -12px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
-  }
-  #course-hero::before {
-    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
-    background: var(--course-color);
-  }
-  #course-hero::after {
-    content: ""; position: absolute; right: -36px; top: -44px; width: 150px; height: 150px;
-    border-radius: 50%; background: var(--course-color); opacity: 0.16; filter: blur(6px);
+  /* ── Course strip (slim, sin tarjeta) ── */
+  #course-strip {
+    padding: 4px 0 18px; border-bottom: 1px solid #2A2A2A; margin-bottom: 20px;
   }
   #semester-tag {
-    display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
-    text-transform: uppercase; color: var(--course-color); margin-bottom: 5px;
+    display: inline-block; font-size: 9.5px; font-weight: 600; letter-spacing: 1.1px;
+    text-transform: uppercase; color: var(--course-color); margin-bottom: 6px;
   }
-  #course-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: #E8EDF5; letter-spacing: -0.3px; line-height: 1.15; position: relative; }
-  #course-code { font-size: 11px; font-weight: 600; margin-top: 4px; letter-spacing: 1.2px; position: relative; }
-  #avg-box {
-    flex-shrink: 0; position: relative; width: 74px; height: 74px;
-    display: none; align-items: center; justify-content: center;
-  }
-  #avg-ring { position: absolute; inset: 0; transform: rotate(-90deg); }
-  #avg-ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 6; }
-  #avg-ring-fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease, stroke 0.3s; }
-  #avg-ring-label { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  #avg-value { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; }
-  #avg-pct { font-size: 8px; color: #6E7E97; margin-top: 3px; letter-spacing: 0.3px; }
+  #course-name { font-family: 'Source Serif 4', serif; font-size: 24px; font-weight: 600; color: #EDEDED; letter-spacing: -0.3px; line-height: 1.15; }
+  #course-code { font-size: 11px; font-weight: 500; margin-top: 5px; letter-spacing: 0.8px; color: #8A8A8A; }
 
-  /* ── Rules note ── */
+  /* ── Status banner (veredicto + promedio, arriba de todo) ── */
+  #status-banner {
+    border: 1px solid #303030; border-radius: 18px; overflow: hidden; margin-bottom: 22px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.32);
+  }
+  #verdict-header { padding: 20px 20px 18px; transition: background 0.3s; }
+  #verdict-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  #verdict-meta { font-size: 10px; color: #999; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; }
+  #verdict-label { font-family: 'Source Serif 4', serif; font-size: 26px; font-weight: 600; line-height: 1.1; letter-spacing: -0.3px; }
+  #verdict-detail { font-size: 13px; color: #C9C9C9; margin-top: 10px; line-height: 1.5; }
+  #avg-box {
+    flex-shrink: 0; display: none; align-items: center; justify-content: center; flex-direction: column;
+    width: 64px; height: 64px; background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.12); border-radius: 50%;
+  }
+  #avg-value { font-family: 'Source Serif 4', serif; font-size: 18px; font-weight: 600; line-height: 1; letter-spacing: -0.3px; color: #EDEDED; }
+  #avg-pct { font-size: 8px; color: #ccc; margin-top: 3px; letter-spacing: 0.3px; }
+
+  /* ── Rules note (sin caja, texto simple) ── */
   #rules-note {
-    background: #142037; border: 1px solid #1F2D44; border-left: 3px solid var(--course-color);
-    border-radius: 8px; padding: 11px 14px; margin-bottom: 22px;
-    font-size: 12px; color: #8997B0; line-height: 1.6;
+    padding: 0 2px; margin-bottom: 20px;
+    font-size: 12px; color: #8A8A8A; line-height: 1.6; font-style: italic;
+    border-left: 2px solid var(--course-color); padding-left: 12px;
   }
 
   /* ── Eval groups ── */
   .group-wrap { margin-bottom: 20px; }
-  .group-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 0 2px; }
+  .group-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 0 2px; flex-wrap: wrap; }
   .group-label {
-    font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
-    padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, var(--pill-color, #5BABC4) 16%, transparent);
-    border: 1px solid color-mix(in srgb, var(--pill-color, #5BABC4) 35%, transparent);
+    font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase;
+    padding: 4px 11px; border-radius: 999px;
+    background: color-mix(in srgb, var(--pill-color, #999) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--pill-color, #999) 30%, transparent);
+    color: var(--pill-color, #999);
   }
   .surprise-controls { margin-left: auto; display: flex; align-items: center; gap: 5px; }
-  .surprise-label { font-size: 11px; color: #6E7E97; margin-right: 2px; }
+  .surprise-label { font-size: 11px; color: #888; margin-right: 2px; }
   .sn-btn {
-    width: 26px; height: 26px; border-radius: 6px;
-    background: #142037; border: 1px solid #243B5C;
-    color: #8997B0; font-size: 11px; font-weight: 700;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: #242424; border: 1px solid #363636;
+    color: #ABABAB; font-size: 11px; font-weight: 600;
     cursor: pointer; transition: all 0.15s;
   }
-  .sn-btn:hover { transform: scale(1.08); }
-  .sn-btn.active { color: #0E1A2C; }
+  .sn-btn:hover { border-color: #555; }
+  .sn-btn.active { border-color: transparent; }
 
   .group-card {
-    background: #131E33; border: 1px solid #1F2D44; border-radius: 16px; overflow: hidden;
-    box-shadow: 0 6px 18px -10px rgba(0,0,0,0.5);
+    background: transparent; border: none; border-top: 1px solid #2A2A2A; border-radius: 0;
   }
 
   /* ── Eval row ── */
-  .eval-row { padding: 16px 18px; border-bottom: 1px solid #1F2D44; }
+  .eval-row { padding: 16px 18px; border-bottom: 1px solid #2C2C2C; }
   .eval-row:last-child { border-bottom: none; }
   .eval-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .eval-name { font-size: 14px; color: #D8DFEC; font-weight: 500; letter-spacing: 0.1px; }
-  .eval-weight { font-size: 11.5px; color: #6E7E97; margin-top: 2px; }
+  .eval-name { font-size: 14px; color: #E4E4E4; font-weight: 500; letter-spacing: 0.1px; }
+  .eval-weight { font-size: 11.5px; color: #828282; margin-top: 2px; }
   .eval-right { display: flex; align-items: center; gap: 8px; }
   .clear-btn {
     background: none; border: none; cursor: pointer;
-    color: #5E6E87; font-size: 13px; padding: 2px 6px;
+    color: #777; font-size: 13px; padding: 2px 6px;
   }
+  .clear-btn:hover { color: #D68A8A; }
   .grade-tag {
-    padding: 5px 14px; border-radius: 6px;
+    padding: 5px 14px; border-radius: 999px;
     min-width: 60px; text-align: center;
     transition: all 0.25s;
-    border: 1px dashed #3D4A60;
+    border: 1px dashed #444;
     background: transparent;
   }
-  .grade-tag.set { border: none; }
+  .grade-tag.set { border: 1px solid transparent; }
   .grade-tag span {
-    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
-    color: #5E6E87; letter-spacing: 0.3px;
+    font-family: 'Source Serif 4', serif; font-size: 17px; font-weight: 600;
+    color: #777; letter-spacing: 0.2px;
   }
-  .grade-tag.set span { color: #0E1A2C; }
+  .grade-tag.set span { color: #1B1B1B; }
 
   /* Slider */
-  .grade-slider {
+  .grade-slider, .lab-task-slider {
     -webkit-appearance: none; appearance: none;
     width: 100%; height: 3px; border-radius: 999px;
-    background: #243B5C; outline: none;
+    background: #333; outline: none;
   }
-  .grade-slider::-webkit-slider-thumb {
+  .grade-slider::-webkit-slider-thumb, .lab-task-slider::-webkit-slider-thumb {
     -webkit-appearance: none; appearance: none;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--accent, #E8B547);
-    border: 2px solid #0E1A2C;
-    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
+    width: 17px; height: 17px; border-radius: 50%;
+    background: var(--accent, #C9A45C);
+    border: 2px solid #1B1B1B;
+    box-shadow: 0 0 0 1px #4A4A4A, 0 2px 6px rgba(0,0,0,0.4);
     cursor: grab; transition: transform 0.15s;
   }
-  .grade-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
-  .grade-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.2); }
-  .grade-slider::-moz-range-thumb {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--accent, #E8B547);
-    border: 2px solid #0E1A2C;
-    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
+  .grade-slider::-webkit-slider-thumb:hover, .lab-task-slider::-webkit-slider-thumb:hover { transform: scale(1.12); }
+  .grade-slider::-webkit-slider-thumb:active, .lab-task-slider::-webkit-slider-thumb:active { cursor: grabbing; }
+  .grade-slider::-moz-range-thumb, .lab-task-slider::-moz-range-thumb {
+    width: 17px; height: 17px; border-radius: 50%;
+    background: var(--accent, #C9A45C);
+    border: 2px solid #1B1B1B;
+    box-shadow: 0 0 0 1px #4A4A4A, 0 2px 6px rgba(0,0,0,0.4);
     cursor: grab;
   }
 
   /* Laboratorio: mismos sliders que el resto, en subtareas T1/T2/T3 */
   .lab-tasks { display: flex; flex-direction: column; gap: 16px; margin-top: 2px; }
   .lab-task-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .lab-task-name { font-size: 12.5px; color: #A8B4C7; font-weight: 500; letter-spacing: 0.2px; }
-  .lab-task-slider {
-    -webkit-appearance: none; appearance: none;
-    width: 100%; height: 3px; border-radius: 999px;
-    background: #243B5C; outline: none;
-  }
-  .lab-task-slider::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--accent, #E8B547);
-    border: 2px solid #0E1A2C;
-    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
-    cursor: grab; transition: transform 0.15s;
-  }
-  .lab-task-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
-  .lab-task-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.2); }
-  .lab-task-slider::-moz-range-thumb {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--accent, #E8B547);
-    border: 2px solid #0E1A2C;
-    box-shadow: 0 0 0 1px var(--accent, #E8B547), 0 2px 8px rgba(0,0,0,0.4);
-    cursor: grab;
-  }
+  .lab-task-name { font-size: 12.5px; color: #ABABAB; font-weight: 500; letter-spacing: 0.2px; }
 
-  /* Participación inputs (computed row) */
+  /* Participación / bono (fila computada) */
   .part-inputs { display: flex; gap: 10px; margin-top: 2px; }
   .part-input-wrap { flex: 1; }
-  .part-input-wrap label { display: block; font-size: 10px; color: #6E7E97; letter-spacing: 0.5px; margin-bottom: 5px; }
+  .part-input-wrap label { display: block; font-size: 10px; color: #888; letter-spacing: 0.5px; margin-bottom: 5px; }
   .part-input {
-    width: 100%; background: #0F1B30; border: 1px solid #243B5C; border-radius: 6px;
-    padding: 8px 10px; color: #E8EDF5; font-size: 13px; font-family: 'Inter', sans-serif;
+    width: 100%; background: #262626; border: 1px solid #3A3A3A; border-radius: 8px;
+    padding: 8px 10px; color: #EDEDED; font-size: 13px; font-family: 'Inter', sans-serif;
   }
-  .part-input:focus { outline: none; border-color: #5BABC4; }
-  .part-lambda { font-size: 11px; margin-top: 10px; line-height: 1.4; }
+  .part-input:focus { outline: none; border-color: #6B6B6B; }
+  .part-lambda { font-size: 11px; margin-top: 10px; line-height: 1.4; color: #888; }
+
+  /* Bono de asistencia */
+  .bonus-card { padding: 14px 16px; }
+  .bonus-hint { font-size: 12px; color: #ABABAB; margin-bottom: 10px; }
+  .bonus-tiers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .bonus-btn {
+    padding: 6px 11px; border-radius: 999px; background: #242424; border: 1px solid #363636;
+    color: #ABABAB; font-size: 11.5px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+  }
+  .bonus-btn:hover { border-color: #555; }
+  .bonus-btn.active { border-color: transparent; }
+  .bonus-result { font-size: 12px; color: #999; line-height: 1.5; }
 
   /* Progress bar */
   .progress-wrap { margin-top: 8px; padding: 0 2px; display: flex; align-items: center; gap: 10px; }
   .progress-track {
-    flex: 1; height: 4px; background: #1A2740; border-radius: 999px;
-    overflow: hidden; border: 1px solid #243B5C;
+    flex: 1; height: 4px; background: #262626; border-radius: 999px;
+    overflow: hidden; border: 1px solid #333;
   }
   .progress-fill { height: 100%; border-radius: 999px; transition: width 0.3s ease-out, background 0.3s; }
-  .progress-pct { font-size: 10px; color: #5E6E87; letter-spacing: 1px; min-width: 28px; text-align: right; }
+  .progress-pct { font-size: 10px; color: #777; letter-spacing: 0.5px; min-width: 28px; text-align: right; }
 
   /* ── Verdict card ── */
-  #verdict-card { margin-top: 18px; background: #131E33; border: 1px solid #1F2D44; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.55); }
-  #verdict-header { padding: 16px 20px; border-bottom: 1px solid #1F2D44; }
-  #verdict-meta { font-size: 10px; color: #8997B0; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px; }
-  #verdict-label { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; line-height: 1.1; letter-spacing: -0.3px; }
-  #verdict-detail { font-size: 13px; color: #D8DFEC; margin-top: 6px; line-height: 1.5; }
+  #verdict-card { margin-top: 18px; background: #212121; border: 1px solid #303030; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 22px rgba(0,0,0,0.3); }
+  #verdict-header { padding: 16px 20px; border-bottom: 1px solid #2E2E2E; }
+  #verdict-meta { font-size: 10px; color: #999; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; }
+  #verdict-label { font-family: 'Source Serif 4', serif; font-size: 21px; font-weight: 600; line-height: 1.1; letter-spacing: -0.2px; }
+  #verdict-detail { font-size: 13px; color: #C9C9C9; margin-top: 6px; line-height: 1.5; }
 
   #min-avg-section {
     padding: 20px 20px 18px;
-    border-bottom: 1px solid #1F2D44;
-    background: linear-gradient(180deg, rgba(232,181,71,0.03) 0%, transparent 100%);
+    border-bottom: 1px solid #2E2E2E;
+    background: #1F1F1F;
   }
-  .min-avg-label { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
+  .min-avg-label { font-size: 10px; color: #888; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; }
   .min-avg-headline { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
-  .min-avg-value { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -1.5px; }
-  .min-avg-suffix { font-size: 13px; color: #8997B0; }
-  .min-avg-detail { font-size: 12.5px; color: #8997B0; line-height: 1.5; margin-top: 4px; }
+  .min-avg-value { font-family: 'Source Serif 4', serif; font-size: 50px; font-weight: 600; line-height: 1; letter-spacing: -1px; }
+  .min-avg-suffix { font-size: 13px; color: #999; }
+  .min-avg-detail { font-size: 12.5px; color: #999; line-height: 1.5; margin-top: 4px; }
 
   /* Visual scale 1.0 → 7.0 */
   .scale-wrap { margin: 16px 0 4px; }
   .scale-track {
-    position: relative; height: 6px; border-radius: 999px;
-    background: linear-gradient(90deg, #F87171 0%, #FB923C 33%, #FACC15 50%, #A3E635 66%, #4ADE80 100%);
-    opacity: 0.55;
+    position: relative; height: 5px; border-radius: 999px;
+    background: linear-gradient(90deg, #B87373 0%, #C79868 33%, #C4B36C 50%, #9CB56E 66%, #7FAE7F 100%);
+    opacity: 0.65;
   }
   .scale-marker {
     position: absolute; top: 50%; transform: translate(-50%, -50%);
-    width: 14px; height: 14px; border-radius: 50%;
-    background: #fff;
-    border: 3px solid #0E1A2C;
-    box-shadow: 0 0 0 2px var(--marker-color, #FACC15), 0 2px 8px rgba(0,0,0,0.5);
+    width: 13px; height: 13px; border-radius: 50%;
+    background: #EDEDED;
+    border: 3px solid #1B1B1B;
+    box-shadow: 0 0 0 2px var(--marker-color, #C4B36C), 0 2px 6px rgba(0,0,0,0.4);
     z-index: 2;
   }
   .scale-labels {
     display: flex; justify-content: space-between;
-    font-size: 10px; color: #5E6E87;
+    font-size: 10px; color: #777;
     margin-top: 8px; padding: 0 2px;
   }
   .scale-tick { position: relative; }
   .scale-tick::before {
     content: ""; position: absolute; left: 50%; top: -10px;
-    width: 1px; height: 4px; background: #3D4A60;
+    width: 1px; height: 4px; background: #444;
     transform: translateX(-50%);
   }
-  .scale-tick.active { color: var(--marker-color, #FACC15); font-weight: 700; }
+  .scale-tick.active { color: var(--marker-color, #C4B36C); font-weight: 600; }
 
   /* Scenario picker */
   .scenarios-block {
     margin-top: 14px; padding-top: 14px;
-    border-top: 1px dashed #243B5C;
+    border-top: 1px dashed #333;
   }
-  .scenarios-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
-  .scenarios-prompt { font-size: 12px; color: #B8C2D3; margin-bottom: 10px; line-height: 1.5; }
-  .scenarios-prompt b { color: #E8EDF5; }
+  .scenarios-title { font-size: 10px; color: #888; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; }
+  .scenarios-prompt { font-size: 12px; color: #B0B0B0; margin-bottom: 10px; line-height: 1.5; }
+  .scenarios-prompt b { color: #EDEDED; }
   .scenario-options { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
   .scenario-btn {
-    padding: 6px 12px; border-radius: 6px;
-    background: #0F1B30; border: 1px solid #243B5C;
-    color: #8997B0; font-size: 12px; font-weight: 600;
+    padding: 6px 13px; border-radius: 999px;
+    background: #242424; border: 1px solid #363636;
+    color: #ABABAB; font-size: 12px; font-weight: 600;
     cursor: pointer; transition: all 0.15s;
-    font-family: 'Fraunces', serif;
+    font-family: 'Source Serif 4', serif;
   }
-  .scenario-btn:hover { transform: translateY(-1px); }
+  .scenario-btn:hover { border-color: #555; }
   .scenario-btn.active {
-    background: var(--course-color); border-color: var(--course-color); color: #0E1A2C;
+    background: var(--course-color); border-color: var(--course-color); color: #1B1B1B;
   }
   .scenario-result {
-    padding: 12px 14px; border-radius: 8px;
-    background: #0F1B30; border: 1px solid #1F2D44;
-    font-size: 13px; color: #D8DFEC; line-height: 1.55;
+    padding: 12px 14px; border-radius: 10px;
+    background: #1F1F1F; border: 1px solid #2E2E2E;
+    font-size: 13px; color: #C9C9C9; line-height: 1.55;
   }
   .scenario-result b {
-    font-family: 'Fraunces', serif; font-weight: 600;
+    font-family: 'Source Serif 4', serif; font-weight: 600;
     color: var(--course-color);
   }
-  .scenario-result.impossible b { color: #F87171; }
-  .scenario-result.easy b { color: #4ADE80; }
+  .scenario-result.impossible b { color: #D68A8A; }
+  .scenario-result.easy b { color: #8FBF8F; }
 
-  .min-avg-extras { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #243B5C; }
-  .min-avg-extra-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #B8C2D3; line-height: 1.5; margin-bottom: 6px; }
+  .min-avg-extras { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #333; }
+  .min-avg-extra-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #B0B0B0; line-height: 1.5; margin-bottom: 6px; }
   .min-avg-extra-item:last-child { margin-bottom: 0; }
-  .min-avg-extra-bullet { color: #FACC15; font-weight: 700; flex-shrink: 0; }
+  .min-avg-extra-bullet { color: #C4B36C; font-weight: 700; flex-shrink: 0; }
 
-  #stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 14px; border-bottom: 1px solid #1F2D44; }
+  #stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 14px; background: #1D1D1D; border-top: 1px solid #2E2E2E; }
   .stat-cell {
     padding: 12px 8px; text-align: center; border-radius: 12px;
-    background: #0F1B30; border: 1px solid #1F2D44;
+    background: #1F1F1F; border: 1px solid #2E2E2E;
   }
-  .stat-label { font-size: 9px; color: #6E7E97; letter-spacing: 1.1px; font-weight: 600; margin-bottom: 5px; }
-  .stat-value { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; }
+  .stat-label { font-size: 9px; color: #888; letter-spacing: 1px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase; }
+  .stat-value { font-family: 'Source Serif 4', serif; font-size: 20px; font-weight: 600; line-height: 1; letter-spacing: -0.2px; }
 
-  #special-checks { padding: 14px 20px; border-bottom: 1px solid #1F2D44; }
-  .checks-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 10px; }
+  #special-checks { padding: 14px 20px; border-bottom: 1px solid #2E2E2E; }
+  .checks-title { font-size: 10px; color: #888; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; }
   .check-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
   .check-row:last-child { margin-bottom: 0; }
   .check-dot {
@@ -394,28 +376,28 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 700; flex-shrink: 0;
   }
-  .check-dot.ok { background: #143020; color: #4ADE80; }
-  .check-dot.fail { background: #3A1F1F; color: #F87171; }
-  .check-dot.pending { background: #243B5C; color: #8997B0; }
-  .check-text { font-size: 13px; color: #D8DFEC; line-height: 1.3; }
-  .check-sub { font-size: 11.5px; color: #6E7E97; margin-top: 1px; }
+  .check-dot.ok { background: #223022; color: #8FBF8F; }
+  .check-dot.fail { background: #332323; color: #D68A8A; }
+  .check-dot.pending { background: #2E2E2E; color: #888; }
+  .check-text { font-size: 13px; color: #E4E4E4; line-height: 1.3; }
+  .check-sub { font-size: 11.5px; color: #888; margin-top: 1px; }
 
   #per-eval { padding: 14px 20px; }
-  .per-eval-title { font-size: 10px; color: #6E7E97; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 4px; }
-  .per-eval-sub { font-size: 11px; color: #5E6E87; font-style: italic; margin-bottom: 12px; }
-  .per-eval-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1A2740; }
+  .per-eval-title { font-size: 10px; color: #888; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+  .per-eval-sub { font-size: 11px; color: #777; font-style: italic; margin-bottom: 12px; }
+  .per-eval-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2A2A2A; }
   .per-eval-row:last-child { border-bottom: none; }
-  .per-eval-name { font-size: 13px; color: #D8DFEC; }
+  .per-eval-name { font-size: 13px; color: #E4E4E4; }
   .per-eval-grade {
-    padding: 3px 10px; border-radius: 5px;
-    font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px;
+    font-family: 'Source Serif 4', serif; font-size: 14px; font-weight: 600;
     min-width: 56px; text-align: center;
   }
 
-  #verdict-course-bar { height: 4px; background: var(--course-color); }
+  #verdict-course-bar { height: 3px; background: var(--course-color); }
 
   /* ── Footer ── */
-  #footer { margin-top: 36px; text-align: center; font-size: 11px; color: #4D5C75; line-height: 1.6; letter-spacing: 0.3px; }
+  #footer { margin-top: 36px; text-align: center; font-size: 11px; color: #666; line-height: 1.6; letter-spacing: 0.3px; }
 </style>
 </head>
 <body>
@@ -443,32 +425,37 @@
 </div>
 
 <div id="main">
-  <div id="course-hero">
-    <div style="flex:1;min-width:0">
-      <div id="semester-tag"></div>
-      <div id="course-name"></div>
-      <div id="course-code"></div>
-    </div>
-    <div id="avg-box" style="display:none">
-      <svg id="avg-ring" width="74" height="74" viewBox="0 0 74 74">
-        <circle id="avg-ring-bg" cx="37" cy="37" r="31"></circle>
-        <circle id="avg-ring-fg" cx="37" cy="37" r="31"></circle>
-      </svg>
-      <div id="avg-ring-label">
-        <div id="avg-value"></div>
-        <div id="avg-pct"></div>
-      </div>
-    </div>
+  <div id="course-strip">
+    <div id="semester-tag"></div>
+    <div id="course-name"></div>
+    <div id="course-code"></div>
   </div>
-  <div id="rules-note"></div>
-  <div id="groups-container"></div>
-  <div id="verdict-card">
-    <div id="verdict-course-bar"></div>
+
+  <div id="status-banner">
     <div id="verdict-header">
-      <div id="verdict-meta">VEREDICTO</div>
-      <div id="verdict-label"></div>
+      <div id="verdict-top-row">
+        <div>
+          <div id="verdict-meta">VEREDICTO</div>
+          <div id="verdict-label"></div>
+        </div>
+        <div id="avg-box" style="display:none">
+          <div id="avg-value"></div>
+          <div id="avg-pct"></div>
+        </div>
+      </div>
       <div id="verdict-detail"></div>
     </div>
+    <div id="stats-grid">
+      <div class="stat-cell"><div class="stat-label">ACTUAL</div><div class="stat-value" id="stat-actual">—</div></div>
+      <div class="stat-cell"><div class="stat-label">MÍN POSIBLE</div><div class="stat-value" id="stat-min">—</div></div>
+      <div class="stat-cell"><div class="stat-label">MÁX POSIBLE</div><div class="stat-value" id="stat-max">—</div></div>
+    </div>
+  </div>
+
+  <div id="rules-note"></div>
+  <div id="groups-container"></div>
+
+  <div id="verdict-card">
     <div id="min-avg-section" style="display:none">
       <div class="min-avg-label">PROMEDIO MÍNIMO PARA APROBAR</div>
       <div class="min-avg-headline">
@@ -500,11 +487,6 @@
       </div>
 
       <div class="min-avg-extras" id="min-avg-extras" style="display:none"></div>
-    </div>
-    <div id="stats-grid">
-      <div class="stat-cell"><div class="stat-label">ACTUAL</div><div class="stat-value" id="stat-actual">—</div></div>
-      <div class="stat-cell"><div class="stat-label">MÍN POSIBLE</div><div class="stat-value" id="stat-min">—</div></div>
-      <div class="stat-cell"><div class="stat-label">MÁX POSIBLE</div><div class="stat-value" id="stat-max">—</div></div>
     </div>
     <div id="special-checks" style="display:none">
       <div class="checks-title">REQUISITOS ESPECIALES</div>
@@ -636,31 +618,49 @@ const COURSES = {
   },
   calculo1: {
     name: "Cálculo I", fullName: "Cálculo I",
-    code: "MAT1610", color: "#2E8CFF", softColor: "#122549", semester: 1,
-    provisional: true,
-    rulesNote: "⚠ Ramo agregado desde tu historial — reglas provisionales (promedio ponderado ≥ 4.0). Cuéntame la ponderación real de tus interrogaciones y examen para dejarlas exactas.",
+    code: "MAT1610", color: "#2E8CFF", softColor: "#122549", semester: 1, currentlyTaking: true,
+    rulesNote: "NF = 0,1·Lab + 0,2·(I1+I2+I3) + 0,3·Examen · Se aprueba con NF ≥ 4,0 (notas redondeadas a 1 decimal)",
     threshold: 4.0, minEvalRules: [],
     groups: [
+      { label: "Laboratorio", color: "#6FB283", evals: [{ id:"lab", name:"Laboratorio", weight:10 }] },
       { label: "Interrogaciones", color: "#5BABC4", evals: [
         { id:"i1", name:"Interrogación 1", weight:20 },
-        { id:"i2", name:"Interrogación 2", weight:25 },
-        { id:"i3", name:"Interrogación 3", weight:25 }
+        { id:"i2", name:"Interrogación 2", weight:20 },
+        { id:"i3", name:"Interrogación 3", weight:20 }
       ]},
       { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
     ]
   },
   comportamiento: {
     name: "Comport. Organizacional", fullName: "Comportamiento Organizacional",
-    code: "EAA1110", color: "#2C4A75", softColor: "#141F33", semester: 1,
-    provisional: true,
-    rulesNote: "⚠ Ramo agregado desde tu historial — reglas provisionales (promedio ponderado ≥ 4.0). Cuéntame la ponderación real de pruebas y trabajos para dejarlas exactas.",
-    threshold: 4.0, minEvalRules: [],
+    code: "EAA1110", color: "#4FA3D1", softColor: "#152A35", semester: 1, currentlyTaking: true,
+    rulesNote: "Examen ≥ 4,0 · Promedio sin Trabajo Grupal ≥ 4,0 · Promedio final (con Trabajo Grupal) ≥ 4,0 · Bono de asistencia hasta +0,3",
+    threshold: 4.0,
+    minEvalRules: [{ id:"e", min:4.0, label:"Examen Final" }],
+    subsetRule: { excludeId:"tg", denom:70, threshold:4.0, strict:false, label:"Promedio sin Trabajo Grupal" },
+    hasBonus: true,
+    bonusMax: 0.3,
+    bonusTiers: [
+      { label:"0-9%",   extra:0 },
+      { label:"10-19%", extra:0.06 },
+      { label:"20-39%", extra:0.12 },
+      { label:"40-59%", extra:0.18 },
+      { label:"60-79%", extra:0.24 },
+      { label:"80%+",   extra:0.30 },
+    ],
     groups: [
-      { label: "Pruebas", color: "#5BABC4", evals: [
-        { id:"p1", name:"Prueba 1", weight:35 },
-        { id:"p2", name:"Prueba 2", weight:35 }
+      { label: "Controles de lectura", color: "#5BABC4", evals: [
+        { id:"c1", name:"Control de Lectura 1", weight:5 },
+        { id:"c2", name:"Control de Lectura 2", weight:5 },
+        { id:"c3", name:"Control de Lectura 3", weight:5 },
+        { id:"c4", name:"Control de Lectura 4", weight:5 }
       ]},
-      { label: "Trabajos y talleres", color: "#A287C7", evals: [{ id:"tw", name:"Trabajo/Taller", weight:30 }] },
+      { label: "Pruebas", color: "#E89860", evals: [
+        { id:"p1", name:"Prueba 1", weight:15 },
+        { id:"p2", name:"Prueba 2", weight:15 }
+      ]},
+      { label: "Examen final", color: "#D86F6F", evals: [{ id:"e", name:"Examen Final", weight:20 }] },
+      { label: "Trabajo grupal", color: "#A287C7", evals: [{ id:"tg", name:"Actividad Trabajo Grupal", weight:30 }] },
     ]
   }
 };
@@ -668,13 +668,13 @@ const COURSES = {
 const SEMESTER_LABELS = { 1: "Primer Semestre", 2: "Segundo Semestre" };
 
 const VERDICTS = {
-  EMPTY:    { color:"#6E7E97", bg:"#142037",  label:"Sin notas aún" },
-  APROBADO: { color:"#4ADE80", bg:"#143020",  label:"Aprobado" },
-  REPROBADO:{ color:"#F87171", bg:"#3A1F1F",  label:"Reprobado" },
-  SEGURA:   { color:"#4ADE80", bg:"#143020",  label:"Zona segura" },
-  POSIBLE:  { color:"#FACC15", bg:"#3A2F1F",  label:"Aprobable" },
-  DIFICIL:  { color:"#FB923C", bg:"#3A271F",  label:"Modo difícil" },
-  IMPOSIBLE:{ color:"#F87171", bg:"#3A1F1F",  label:"Misión imposible" },
+  EMPTY:    { color:"#9A9A9A", bg:"#242424",  label:"Sin notas aún" },
+  APROBADO: { color:"#8FBF8F", bg:"#1C2A1E",  label:"Aprobado" },
+  REPROBADO:{ color:"#D68A8A", bg:"#2E1F1F",  label:"Reprobado" },
+  SEGURA:   { color:"#8FBF8F", bg:"#1C2A1E",  label:"Zona segura" },
+  POSIBLE:  { color:"#C9AD6A", bg:"#2B2418",  label:"Aprobable" },
+  DIFICIL:  { color:"#C99268", bg:"#2B211A",  label:"Modo difícil" },
+  IMPOSIBLE:{ color:"#D68A8A", bg:"#2E1F1F",  label:"Misión imposible" },
 };
 
 // ─── State ────────────────────────────────────────────────────────────────────
@@ -717,33 +717,45 @@ function saveState() {
 function parseG(v) { const n = parseFloat(v); return isNaN(n) ? null : Math.min(7, Math.max(1, n)); }
 
 function gradeColor(g) {
-  if (g === null || g === undefined) return "#3D4A60";
-  if (g >= 5.5) return "#4ADE80";
-  if (g >= 4.5) return "#A3E635";
-  if (g >= 4.0) return "#FACC15";
-  if (g >= 3.0) return "#FB923C";
-  return "#F87171";
+  if (g === null || g === undefined) return "#6B6B6B";
+  if (g >= 5.5) return "#7FAE7F";
+  if (g >= 4.5) return "#9CB56E";
+  if (g >= 4.0) return "#C4B36C";
+  if (g >= 3.0) return "#C79868";
+  return "#B87373";
 }
 
-// Anillo circular del promedio actual en el hero (usado en cada punto donde cambia una nota)
-const AVG_RING_C = 2 * Math.PI * 31;
+// Bloque circular del promedio actual en el hero (usado en cada punto donde cambia una nota)
 function updateAvgDisplay(cur) {
   const avgBox = document.getElementById("avg-box");
   if (!cur) { avgBox.style.display = "none"; return; }
   avgBox.style.display = "flex";
   const color = gradeColor(cur.avg);
-  document.getElementById("avg-value").textContent = cur.avg.toFixed(2);
-  document.getElementById("avg-value").style.color = color;
+  avgBox.style.borderColor = color;
+  avgBox.style.boxShadow = `0 0 0 1px ${color}66`;
+  const valueEl = document.getElementById("avg-value");
+  valueEl.textContent = cur.avg.toFixed(2);
+  valueEl.style.color = color;
   document.getElementById("avg-pct").textContent = `${cur.weight.toFixed(0)}%`;
-  const frac = Math.min(1, Math.max(0, (cur.avg - 1) / 6));
-  const fg = document.getElementById("avg-ring-fg");
-  fg.style.strokeDasharray = `${AVG_RING_C}`;
-  fg.style.strokeDashoffset = `${AVG_RING_C * (1 - frac)}`;
-  fg.style.stroke = color;
 }
 
 function getSurpriseCount(courseId) {
   return (state.surpriseCount && state.surpriseCount[courseId]) || 3;
+}
+
+// Bono de asistencia (Comportamiento Organizacional): tramo elegido → puntos extra en la nota final.
+function getBonusTierIndex(courseId) {
+  const g = state.grades[courseId] || {};
+  const idx = g.bonusTierIndex;
+  return (idx === undefined || idx === null || idx === "") ? null : parseInt(idx, 10);
+}
+function getBonusAmount(courseId) {
+  const course = COURSES[courseId];
+  if (!course || !course.hasBonus) return 0;
+  const idx = getBonusTierIndex(courseId);
+  if (idx === null) return 0;
+  const tier = course.bonusTiers[idx];
+  return tier ? tier.extra : 0;
 }
 
 // ─── Selección de ramos (sidebar) ──────────────────────────────────────────────
@@ -807,7 +819,7 @@ function renderSidebar() {
         <div class="sidebar-course-row ${isCurrent?"current":""} ${active?"":"inactive"}" data-course-id="${id}">
           <span class="sidebar-dot" style="background:${c.color}"></span>
           <div class="sidebar-course-info">
-            <div class="sidebar-course-name">${c.name} ${c.currentlyTaking ? '<span class="badge-current">cursando</span>' : ""}</div>
+            <div class="sidebar-course-name">${c.name} ${(active && c.currentlyTaking) ? '<span class="badge-current">cursando</span>' : ""}</div>
             <div class="sidebar-course-code">${c.code}</div>
           </div>
           <label class="toggle-switch">
@@ -869,12 +881,12 @@ function labFormulaText(courseId) {
   const computed = computeLaboratorio(courseId);
   const filled = countLabTasksDone(courseId);
   if (computed === null) {
-    return { text: "Completa al menos una tarea · NL = (T1 + T2 + T3) / 3", style: "color:#5E6E87;font-style:italic" };
+    return { text: "Completa al menos una tarea · NL = (T1 + T2 + T3) / 3", style: "color:#7A7A7A;font-style:italic" };
   }
   if (filled < 3) {
-    return { text: `Provisional con ${filled}/3 tareas · NL = ${computed.toFixed(1)}`, style: "color:#8997B0;font-style:italic" };
+    return { text: `Provisional con ${filled}/3 tareas · NL = ${computed.toFixed(1)}`, style: "color:#999999;font-style:italic" };
   }
-  return { text: `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`, style: "color:#8997B0;font-style:normal" };
+  return { text: `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`, style: "color:#999999;font-style:normal" };
 }
 
 function getEvalGrade(courseId, ev) {
@@ -955,11 +967,13 @@ function analyzeGrades(courseId) {
 
   const thr = course.threshold;
   const effThr = effectiveThreshold(course);
+  const bonus = getBonusAmount(courseId);          // sólo aplica a la nota final del ramo (no a mínimos ni al "sin TG")
+  const effThrB = effThr - bonus;                    // umbral efectivo "descontado" el bono, para calcular cuánto falta
   const total = doneW + pendW;
-  const maxFinal = (earned + 7 * pendW) / total;
-  const minFinal = (earned + 1 * pendW) / total;
+  const maxFinal = Math.min(7, (earned + 7 * pendW) / total + bonus);
+  const minFinal = Math.min(7, (earned + 1 * pendW) / total + bonus);
   const currentAvg = earned / doneW;
-  const uniformNeeded = pendW > 0 ? (effThr * total - earned) / pendW : null;
+  const uniformNeeded = pendW > 0 ? (effThrB * total - earned) / pendW : null;
   const rules = course.minEvalRules || [];
   const cmp = course.strictThreshold ? ">" : "≥";
 
@@ -985,9 +999,9 @@ function analyzeGrades(courseId) {
   // ── Verdict ──────────────────────────────────────────────────────────────
   let verdict, verdictDetail = "";
   if (pendW === 0) {
-    const f = earned / total;
+    const f = Math.min(7, earned / total + bonus);
     if (hardImpossible) { verdict = "REPROBADO"; verdictDetail = hardReason; }
-    else { verdict = passesThreshold(f, course) ? "APROBADO" : "REPROBADO"; verdictDetail = `Nota final: ${f.toFixed(2)}`; }
+    else { verdict = passesThreshold(f, course) ? "APROBADO" : "REPROBADO"; verdictDetail = `Nota final: ${f.toFixed(2)}${bonus>0?` (incluye bono +${bonus.toFixed(2)})`:""}`; }
   } else if (hardImpossible) {
     verdict = "IMPOSIBLE"; verdictDetail = hardReason;
   } else if (maxFinal < effThr) {
@@ -1023,7 +1037,7 @@ function analyzeGrades(courseId) {
   // ── Per-eval analysis ──────────────────────────────────────────────────────
   const perEvalAnalysis = pending.map(ev => {
     const otherW = pendW - ev.weight;
-    let needed = (effThr * total - earned - 5.0 * otherW) / ev.weight;
+    let needed = (effThrB * total - earned - 5.0 * otherW) / ev.weight;
     let reason = "promedio general";
     for (const rule of rules) {
       if (ev.id === rule.id && rule.min > needed) { needed = rule.min; reason = `mínimo de ${rule.label.toLowerCase()} (${rule.min.toFixed(1)})`; }
@@ -1075,7 +1089,7 @@ function renderLabTaskSlider(cid, field, label) {
         style="--accent:#6FB283">
       <div class="progress-wrap">
         <div class="progress-track">
-          <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${hasVal?`box-shadow:0 0 8px ${bcolor}66`:""};"></div>
+          <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${hasVal?`border-right:2px solid #000`:""};"></div>
         </div>
         <div class="progress-pct">${hasVal ? Math.round(fillPct)+"%" : "—"}</div>
       </div>
@@ -1151,7 +1165,7 @@ function renderComputedRow(cid, ev) {
   const lambdaText = lambda !== null
     ? `λ = ${lambda.toFixed(3)} · Participación = λ × (Control 1 + Control 2) / 2`
     : `Completa Control 1, Control 2, puntos y máximo teórico`;
-  const lambdaStyle = lambda !== null ? "color:#8997B0;font-style:normal" : "color:#5E6E87;font-style:italic";
+  const lambdaStyle = lambda !== null ? "color:#999999;font-style:normal" : "color:#7A7A7A;font-style:italic";
 
   return `
     <div class="eval-row" data-part-row="${cid}">
@@ -1201,11 +1215,11 @@ function updateParticipacionRow(courseId) {
     const lambda = getLambdaInfo(courseId);
     if (lambda !== null) {
       lambdaEl.textContent = `λ = ${lambda.toFixed(3)} · Participación = λ × (Control 1 + Control 2) / 2`;
-      lambdaEl.style.color = "#8997B0";
+      lambdaEl.style.color = "#999999";
       lambdaEl.style.fontStyle = "normal";
     } else {
       lambdaEl.textContent = `Completa Control 1, Control 2, puntos y máximo teórico`;
-      lambdaEl.style.color = "#5E6E87";
+      lambdaEl.style.color = "#7A7A7A";
       lambdaEl.style.fontStyle = "italic";
     }
   }
@@ -1237,9 +1251,7 @@ function render() {
     </button>`;
   }).join("");
 
-  // Hero
-  document.getElementById("course-hero").style.background = course.softColor;
-  document.getElementById("course-hero").style.border = `1px solid ${course.color}33`;
+  // Hero — ya no aplica fondo/borde por ramo (queda como acento en course-strip vía CSS)
   document.getElementById("semester-tag").textContent =
     SEMESTER_LABELS[course.semester] + (course.currentlyTaking ? " · cursando ahora" : course.provisional ? " · provisional" : "");
   document.getElementById("course-name").textContent = course.fullName;
@@ -1291,7 +1303,7 @@ function render() {
             style="--accent:${group.color}">
           <div class="progress-wrap">
             <div class="progress-track">
-              <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${isSet?`box-shadow:0 0 8px ${bcolor}66`:""};"></div>
+              <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${isSet?`border-right:2px solid #000`:""};"></div>
             </div>
             <div class="progress-pct">${isSet ? Math.round(fillPct)+"%" : "—"}</div>
           </div>
@@ -1302,21 +1314,40 @@ function render() {
       <div class="surprise-controls">
         <span class="surprise-label">cantidad</span>
         ${[1,2,3,4,5,6].map(num=>`<button class="sn-btn ${num===n?"active":""}" data-n="${num}" data-course="${cid}"
-          style="${num===n?`background:${group.color};border-color:${group.color};color:#0E1A2C`:""}">${num}</button>`).join("")}
+          style="${num===n?`background:${group.color};border-color:${group.color};color:#1B1B1B`:""}">${num}</button>`).join("")}
       </div>` : "";
 
     return `
       <div class="group-wrap">
         <div class="group-header">
-          <span class="group-label" style="color:${group.color};--pill-color:${group.color}">${group.label}${group.dynamic ? ` · promedio, ${group.totalWeight}%` : ""}</span>
+          <span class="group-label" style="--pill-color:${group.color}">${group.label}${group.dynamic ? ` · promedio, ${group.totalWeight}%` : ""}</span>
           ${surpriseControls}
         </div>
         <div class="group-card">${rows}</div>
       </div>`;
-  }).join("");
+  }).join("") + (course.hasBonus ? renderBonusBlock(cid, course) : "");
 
   // Verdict
   renderVerdict();
+}
+
+function renderBonusBlock(cid, course) {
+  const selectedIdx = getBonusTierIndex(cid);
+  const bonus = getBonusAmount(cid);
+  const tiers = course.bonusTiers.map((t, i) => `
+    <button class="bonus-btn ${i===selectedIdx?"active":""}" data-course="${cid}" data-bonus-idx="${i}"
+      style="${i===selectedIdx?`background:${course.color};border-color:${course.color};color:#1B1B1B`:""}">${t.label}</button>`).join("");
+  return `
+    <div class="group-wrap">
+      <div class="group-header">
+        <span class="group-label" style="--pill-color:${course.color}">Bono de asistencia · hasta +${course.bonusMax.toFixed(2)}</span>
+      </div>
+      <div class="group-card bonus-card">
+        <div class="bonus-hint">¿Qué % de las encuestas/ejercicios en clase completaste?</div>
+        <div class="bonus-tiers">${tiers}</div>
+        <div class="bonus-result">${selectedIdx!==null ? `Bono aplicado: +${bonus.toFixed(2)} en tu nota final del ramo` : "Elige un tramo — no es obligatorio, es opcional."}</div>
+      </div>
+    </div>`;
 }
 
 function renderVerdict() {
@@ -1341,7 +1372,7 @@ function renderVerdict() {
     statMax.textContent = a.maxFinal.toFixed(2);
     statMax.style.color = gradeColor(a.maxFinal);
   } else {
-    [statActual, statMin, statMax].forEach(el => { el.textContent = "—"; el.style.color = "#3D4A60"; });
+    [statActual, statMin, statMax].forEach(el => { el.textContent = "—"; el.style.color = "#6B6B6B"; });
   }
 
   // Minimum average needed (uniform across pending) + extra constraints + scenarios
@@ -1360,7 +1391,7 @@ function renderVerdict() {
 
     if (u > 7.0) {
       valueEl.textContent = "imposible";
-      valueEl.style.color = "#F87171";
+      valueEl.style.color = "#B87373";
       valueEl.style.fontSize = "36px";
       suffixEl.textContent = "";
       detailEl.innerHTML = `Ni con 7.0 en todo lo que queda alcanzas el promedio mínimo.`;
@@ -1368,14 +1399,14 @@ function renderVerdict() {
       scenariosBlock.style.display = "none";
     } else if (u <= 1.0) {
       valueEl.textContent = "1.0";
-      valueEl.style.color = "#4ADE80";
+      valueEl.style.color = "#7FAE7F";
       valueEl.style.fontSize = "56px";
       suffixEl.textContent = "promedio";
       detailEl.innerHTML = `Ya tienes el promedio asegurado, incluso con la nota mínima en lo que falta.`;
       scaleWrap.style.display = "block";
       const markerPos = ((1.0 - 1) / 6) * 100;
       document.getElementById("scale-marker").style.left = markerPos + "%";
-      document.getElementById("scale-marker").style.setProperty("--marker-color", "#4ADE80");
+      document.getElementById("scale-marker").style.setProperty("--marker-color", "#7FAE7F");
       scenariosBlock.style.display = "none";
     } else {
       const displayU = Math.max(1.0, u);
@@ -1385,9 +1416,9 @@ function renderVerdict() {
       valueEl.style.fontSize = "56px";
       suffixEl.textContent = pendCount === 1 ? "en la pendiente" : "promedio";
       if (pendCount === 1) {
-        detailEl.innerHTML = `nota mínima exacta que necesitas en <b style="color:#D8DFEC">${a.perEvalAnalysis[0].name}</b>.`;
+        detailEl.innerHTML = `nota mínima exacta que necesitas en <b style="color:#E4E4E4">${a.perEvalAnalysis[0].name}</b>.`;
       } else {
-        detailEl.innerHTML = `que necesitas <b style="color:#D8DFEC">en promedio</b> entre las ${pendCount} pendientes. Puedes compensar — sacar más en una y menos en otra.`;
+        detailEl.innerHTML = `que necesitas <b style="color:#E4E4E4">en promedio</b> entre las ${pendCount} pendientes. Puedes compensar — sacar más en una y menos en otra.`;
       }
 
       // Scale
@@ -1409,7 +1440,7 @@ function renderVerdict() {
     // Extras
     if (a.extras && a.extras.length > 0) {
       extrasEl.style.display = "block";
-      extrasEl.innerHTML = `<div style="font-size:10px;color:#6E7E97;letter-spacing:1.5px;font-weight:600;margin-bottom:8px">PERO ADEMÁS</div>` +
+      extrasEl.innerHTML = `<div style="font-size:10px;color:#888;letter-spacing:1.5px;font-weight:600;margin-bottom:8px">PERO ADEMÁS</div>` +
         a.extras.map(e => `
           <div class="min-avg-extra-item">
             <span class="min-avg-extra-bullet">•</span>
@@ -1425,7 +1456,7 @@ function renderVerdict() {
     const detailEl = document.getElementById("min-avg-detail");
     const extrasEl = document.getElementById("min-avg-extras");
     valueEl.textContent = "imposible";
-    valueEl.style.color = "#F87171";
+    valueEl.style.color = "#B87373";
     valueEl.style.fontSize = "36px";
     suffixEl.textContent = "";
     detailEl.innerHTML = `Ya no puedes aprobar este ramo por una restricción especial.`;
@@ -1458,9 +1489,9 @@ function renderVerdict() {
       const n = ev.needed;
       const ok = ev.achievable;
       const disp = Math.max(1.0, n);
-      const bg = !ok ? "#3A1F1F" : n <= 4.0 ? "#143020" : n > 6.0 ? "#3A271F" : "#3A2F1F";
-      const fg = !ok ? "#F87171" : n <= 4.0 ? "#4ADE80" : n > 6.0 ? "#FB923C" : "#FACC15";
-      const reasonHtml = `<div style="font-size:10px;color:#5E6E87;margin-top:2px;font-style:italic">por ${ev.reason}</div>`;
+      const bg = !ok ? "#2E1F1F" : n <= 4.0 ? "#1C2A1E" : n > 6.0 ? "#2B211A" : "#2B2418";
+      const fg = !ok ? "#D68A8A" : n <= 4.0 ? "#8FBF8F" : n > 6.0 ? "#C99268" : "#C9AD6A";
+      const reasonHtml = `<div style="font-size:10px;color:#888;margin-top:2px;font-style:italic">por ${ev.reason}</div>`;
       return `
         <div class="per-eval-row" style="align-items:flex-start;padding:10px 0">
           <div>
@@ -1477,6 +1508,8 @@ function renderVerdict() {
 function renderScenarios(a, courseId) {
   const course = COURSES[courseId];
   const effThr = effectiveThreshold(course);
+  const bonus = getBonusAmount(courseId);
+  const effThrB = effThr - bonus;
   const total = a.doneW + a.pendW;
   const earned = a.currentAvg * a.doneW;
 
@@ -1489,7 +1522,7 @@ function renderScenarios(a, courseId) {
   const picks = [3.0, 4.0, 5.0, 6.0, 7.0];
   const pick = state.scenarioPick;
 
-  let neededInOthers = (effThr * total - earned - pick * anchor.weight) / otherTotalW;
+  let neededInOthers = (effThrB * total - earned - pick * anchor.weight) / otherTotalW;
   let constraintReason = null;
 
   const rule = (course.minEvalRules || []).find(r => r.id === anchor.id);
@@ -1573,6 +1606,15 @@ document.addEventListener("click", e => {
   if (sn) {
     if (!state.surpriseCount) state.surpriseCount = {};
     state.surpriseCount[sn.dataset.course] = parseInt(sn.dataset.n);
+    saveState(); render(); return;
+  }
+
+  // Bono de asistencia (tramo elegido)
+  const bn = e.target.closest(".bonus-btn");
+  if (bn) {
+    const course = bn.dataset.course;
+    if (!state.grades[course]) state.grades[course] = {};
+    state.grades[course].bonusTierIndex = bn.dataset.bonusIdx;
     saveState(); render(); return;
   }
 
