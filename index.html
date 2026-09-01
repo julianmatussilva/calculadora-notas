@@ -580,6 +580,27 @@ const COURSES = {
       { label: "Examen final", color: "#B85A5A", evals: [{ id:"e", name:"Examen Final", weight:30 }] },
     ]
   },
+  macro: {
+    name: "Macroeconomía", fullName: "Introducción a la Macroeconomía",
+    code: "EAE1210", color: "#D86F6F", softColor: "#3A1F1F", semester: 2, currentlyTaking: true,
+    rulesNote: "Promedio ≥ 4.0 · Examen ≥ 3.0 (si no, tu nota final queda en 3.9 aunque el promedio dé más) · Pregunta del Profesor = promedio de PF en P1, P2 y Examen",
+    threshold: 4.0,
+    minEvalRules: [{ id:"ex", min:3.0, label:"Examen", cappedFinalAt:3.9 }],
+    groups: [
+      { label: "Control", color: "#5BABC4", evals: [{ id:"c1", name:"Control 1", weight:16 }] },
+      { label: "Pruebas", color: "#E89860", evals: [
+        { id:"p1", name:"Prueba 1", weight:22 },
+        { id:"p2", name:"Prueba 2", weight:22 }
+      ]},
+      { label: "Examen final", color: "#B85A5A", evals: [{ id:"ex", name:"Examen", weight:30 }] },
+      { label: "Pregunta del profesor", color: "#A287C7", evals: [{
+          id:"pf", name:"Pregunta del Profesor", weight:10, computed:true, computedType:"avg3",
+          formulaLabel:"(PF-P1 + PF-P2 + PF-Ex) / 3",
+          taskLabels:["PF Prueba 1","PF Prueba 2","PF Examen"],
+          taskColor:"#A287C7"
+      }]},
+    ]
+  },
   filosofia: {
     name: "Filosofía", fullName: "Filosofía: ¿Para qué?",
     code: "FIL2001", color: "#E8C548", softColor: "#332C1A", semester: 2, currentlyTaking: true,
@@ -680,7 +701,7 @@ const VERDICTS = {
 // ─── State ────────────────────────────────────────────────────────────────────
 let state = {
   tab: "algebra",
-  grades: { algebra:{}, calculo:{}, contabilidad:{}, micro:{}, filosofia:{}, probabilidad:{}, calculo1:{}, comportamiento:{} },
+  grades: { algebra:{}, calculo:{}, contabilidad:{}, micro:{}, macro:{}, filosofia:{}, probabilidad:{}, calculo1:{}, comportamiento:{} },
   surpriseCount: { contabilidad: 3, probabilidad: 3 },
   scenarioPick: 5.0,
   // Ramos visibles en la calculadora. Por defecto: solo los del semestre en curso.
@@ -860,11 +881,12 @@ function getLambdaInfo(courseId) {
   return Math.min(1 + 0.5 * (puntos / (0.83 * maxTeo)), 1.5);
 }
 
-// Laboratorio (Cálculo II): NL = (T1 + T2 + T3) / 3, aproximado al primer decimal.
-// Mientras falten tareas, se muestra un promedio provisional con las que ya están.
-function computeLaboratorio(courseId) {
+// Promedio de 3 sub-notas (T1+T2+T3)/3, aproximado al primer decimal — usado por
+// Laboratorio (Cálculo II) y Pregunta del Profesor (Macro). Mientras falten tareas,
+// se muestra un promedio provisional con las que ya están.
+function computeAvg3(courseId, evId) {
   const g = state.grades[courseId] || {};
-  const vals = ["lab_t1", "lab_t2", "lab_t3"]
+  const vals = [`${evId}_t1`, `${evId}_t2`, `${evId}_t3`]
     .map(f => parseFloat(g[f]))
     .filter(v => !isNaN(v));
   if (vals.length === 0) return null;
@@ -872,26 +894,27 @@ function computeLaboratorio(courseId) {
   return Math.round(raw * 10) / 10;
 }
 
-function countLabTasksDone(courseId) {
+function countAvg3Done(courseId, evId) {
   const g = state.grades[courseId] || {};
-  return ["lab_t1", "lab_t2", "lab_t3"].filter(f => g[f] !== undefined && g[f] !== "").length;
+  return [`${evId}_t1`, `${evId}_t2`, `${evId}_t3`].filter(f => g[f] !== undefined && g[f] !== "").length;
 }
 
-function labFormulaText(courseId) {
-  const computed = computeLaboratorio(courseId);
-  const filled = countLabTasksDone(courseId);
+function avg3FormulaText(courseId, evId, formulaLabel) {
+  const computed = computeAvg3(courseId, evId);
+  const filled = countAvg3Done(courseId, evId);
+  const fLabel = formulaLabel || "(T1 + T2 + T3) / 3";
   if (computed === null) {
-    return { text: "Completa al menos una tarea · NL = (T1 + T2 + T3) / 3", style: "color:#7A7A7A;font-style:italic" };
+    return { text: `Completa al menos una tarea · ${fLabel}`, style: "color:#7A7A7A;font-style:italic" };
   }
   if (filled < 3) {
-    return { text: `Provisional con ${filled}/3 tareas · NL = ${computed.toFixed(1)}`, style: "color:#999999;font-style:italic" };
+    return { text: `Provisional con ${filled}/3 · ${fLabel} = ${computed.toFixed(1)}`, style: "color:#999999;font-style:italic" };
   }
-  return { text: `NL = (T1 + T2 + T3) / 3 = ${computed.toFixed(1)}`, style: "color:#999999;font-style:normal" };
+  return { text: `${fLabel} = ${computed.toFixed(1)}`, style: "color:#999999;font-style:normal" };
 }
 
 function getEvalGrade(courseId, ev) {
   if (ev.computed) {
-    if (ev.computedType === "laboratorio") return computeLaboratorio(courseId);
+    if (ev.computedType === "laboratorio" || ev.computedType === "avg3") return computeAvg3(courseId, ev.id);
     return computeParticipacion(courseId);
   }
   return parseG((state.grades[courseId] || {})[ev.id]);
@@ -1065,8 +1088,8 @@ function analyzeGrades(courseId) {
   return { state:"analyzed", currentAvg, doneW, pendW, maxFinal, minFinal, uniformNeeded, verdict, verdictDetail, specialChecks, perEvalAnalysis, extras, hardImpossible };
 }
 
-// ─── Computed row (Laboratorio) ────────────────────────────────────────────────
-function renderLabTaskSlider(cid, field, label) {
+// ─── Computed row (promedio de 3 sub-notas: Laboratorio, Pregunta del Profesor, etc.) ──
+function renderAvg3TaskSlider(cid, evId, field, label, accentColor) {
   const g = state.grades[cid] || {};
   const val = g[field];
   const hasVal = val !== undefined && val !== "";
@@ -1085,32 +1108,32 @@ function renderLabTaskSlider(cid, field, label) {
         </div>
       </div>
       <input type="range" class="lab-task-slider" min="1" max="7" step="0.1"
-        value="${num}" data-course="${cid}" data-id="${field}" data-set="${hasVal}"
-        style="--accent:#6FB283">
+        value="${num}" data-course="${cid}" data-id="${field}" data-parent-eval="${evId}" data-set="${hasVal}"
+        style="--accent:${accentColor}">
       <div class="progress-wrap">
         <div class="progress-track">
-          <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${hasVal?`border-right:2px solid #000`:""};"></div>
+          <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${hasVal?`box-shadow:0 0 8px ${bcolor}66`:""};"></div>
         </div>
         <div class="progress-pct">${hasVal ? Math.round(fillPct)+"%" : "—"}</div>
       </div>
     </div>`;
 }
 
-function renderLaboratorioRow(cid, ev) {
-  const computed = computeLaboratorio(cid);
+function renderAvg3Row(cid, ev) {
+  const computed = computeAvg3(cid, ev.id);
   const isSet = computed !== null;
   const bcolor = isSet ? gradeColor(computed) : "#2A3A55";
   const weightLabel = ev.weightLabel || `${ev.weight.toFixed(1)}% del ramo`;
-  const formula = labFormulaText(cid);
+  const formula = avg3FormulaText(cid, ev.id, ev.formulaLabel);
+  const taskLabels = ev.taskLabels || ["Tarea 1", "Tarea 2", "Tarea 3"];
+  const accentColor = ev.taskColor || "#6FB283";
 
-  const taskRows = [
-    ["lab_t1", "Tarea 1"],
-    ["lab_t2", "Tarea 2"],
-    ["lab_t3", "Tarea 3"],
-  ].map(([field, label]) => renderLabTaskSlider(cid, field, label)).join("");
+  const taskRows = taskLabels.map((label, i) =>
+    renderAvg3TaskSlider(cid, ev.id, `${ev.id}_t${i+1}`, label, accentColor)
+  ).join("");
 
   return `
-    <div class="eval-row" data-lab-row="${cid}">
+    <div class="eval-row" data-avg3-row="${cid}:${ev.id}">
       <div class="eval-top">
         <div>
           <div class="eval-name">${ev.name}</div>
@@ -1127,10 +1150,10 @@ function renderLaboratorioRow(cid, ev) {
     </div>`;
 }
 
-function updateLaboratorioRow(courseId) {
-  const row = document.querySelector(`[data-lab-row="${courseId}"]`);
+function updateAvg3Row(courseId, evId) {
+  const row = document.querySelector(`[data-avg3-row="${courseId}:${evId}"]`);
   if (!row) return;
-  const computed = computeLaboratorio(courseId);
+  const computed = computeAvg3(courseId, evId);
   const tag = row.querySelector(".eval-top .grade-tag");
   const span = tag.querySelector("span");
   if (computed !== null) {
@@ -1145,7 +1168,8 @@ function updateLaboratorioRow(courseId) {
   }
   const formulaEl = row.querySelector(".part-lambda");
   if (formulaEl) {
-    const formula = labFormulaText(courseId);
+    const ev = COURSES[courseId].groups.flatMap(g => g.evals || []).find(e => e.id === evId);
+    const formula = avg3FormulaText(courseId, evId, ev && ev.formulaLabel);
     formulaEl.textContent = formula.text;
     formulaEl.style.cssText = formula.style;
   }
@@ -1153,7 +1177,7 @@ function updateLaboratorioRow(courseId) {
 
 // ─── Computed row (Participación) ──────────────────────────────────────────────
 function renderComputedRow(cid, ev) {
-  if (ev.computedType === "laboratorio") return renderLaboratorioRow(cid, ev);
+  if (ev.computedType === "laboratorio" || ev.computedType === "avg3") return renderAvg3Row(cid, ev);
   const g = state.grades[cid] || {};
   const puntos = g["part_puntos"] || "";
   const maxTeo = g["part_max"] || "";
@@ -1303,7 +1327,7 @@ function render() {
             style="--accent:${group.color}">
           <div class="progress-wrap">
             <div class="progress-track">
-              <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${isSet?`border-right:2px solid #000`:""};"></div>
+              <div class="progress-fill" style="width:${fillPct}%;background:${bcolor};${isSet?`box-shadow:0 0 8px ${bcolor}66`:""};"></div>
             </div>
             <div class="progress-pct">${isSet ? Math.round(fillPct)+"%" : "—"}</div>
           </div>
@@ -1690,8 +1714,8 @@ document.addEventListener("input", e => {
       }
     }
 
-    // Refresh the computed Laboratorio (NL) summary tag
-    updateLaboratorioRow(course);
+    // Refresh the computed summary tag (Laboratorio, Pregunta del Profesor, etc.)
+    updateAvg3Row(course, e.target.dataset.parentEval);
     updateAvgDisplay(calcCurrent(state.tab));
   } else if (e.target.classList.contains("part-input")) {
     const { course, field } = e.target.dataset;
@@ -1711,6 +1735,13 @@ document.addEventListener("change", e => {
 // ─── Init ─────────────────────────────────────────────────────────────────────
 loadState();
 render();
+
+// Registro del service worker (necesario para que Chrome ofrezca "Instalar app")
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
